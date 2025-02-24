@@ -7,7 +7,7 @@
 
 import unittest
 
-from zwoasi import ZWOASIError
+from zwoasi import ZWOASIError, ZWOASIIOError
 
 # **************************************************************************************
 
@@ -32,6 +32,49 @@ class TestZWOASIError(unittest.TestCase):
         with self.assertRaises(ZWOASIError) as context:
             raise ZWOASIError(test_message)
         self.assertEqual(str(context.exception), test_message)
+
+
+# **************************************************************************************
+
+
+class TestZWOASIIOError(unittest.TestCase):
+    def test_inheritance(self):
+        """Test that ZWOASIIOError inherits from ZWOASIError."""
+        self.assertTrue(issubclass(ZWOASIIOError, ZWOASIError))
+
+    def test_error_message(self):
+        """Test that the error message is correctly set for ZWOASIIOError."""
+        test_message = "I/O error occurred."
+        error = ZWOASIIOError(test_message)
+        self.assertEqual(str(error), test_message)
+
+    def test_error_code_default(self):
+        """
+        Test that if no error_code is provided, it defaults to None.
+        """
+        test_message = "I/O error occurred."
+        error = ZWOASIIOError(test_message)
+        self.assertIsNone(error.error_code)
+
+    def test_error_code_custom(self):
+        """
+        Test that a custom error_code is correctly assigned to ZWOASIIOError.
+        """
+        test_message = "I/O error occurred."
+        test_code = 42
+        error = ZWOASIIOError(test_message, error_code=test_code)
+        self.assertEqual(error.error_code, test_code)
+
+    def test_raising_error_with_code(self):
+        """
+        Test raising ZWOASIIOError with a specific error_code and verifying it.
+        """
+        test_message = "I/O error with code."
+        test_code = 500
+        with self.assertRaises(ZWOASIIOError) as context:
+            raise ZWOASIIOError(test_message, error_code=test_code)
+        self.assertEqual(str(context.exception), test_message)
+        self.assertEqual(context.exception.error_code, test_code)
 
 
 # **************************************************************************************
