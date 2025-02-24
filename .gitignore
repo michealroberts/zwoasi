@@ -169,3 +169,11 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# MacOS
+.DS_STORE
+
+# ZWO ASI Specific SDK
+!sdk
+!sdk/*/include
+!sdk/*/lib
