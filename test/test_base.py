@@ -8,7 +8,7 @@
 import unittest
 from typing import Tuple
 
-from src.zwoasi import __license__, __version__
+from zwoasi import __license__, __version__
 
 # **************************************************************************************
 
