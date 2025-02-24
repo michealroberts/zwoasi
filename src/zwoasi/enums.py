@@ -5,24 +5,25 @@
 
 # **************************************************************************************
 
-from .enums import ZWOASIBayerPattern
-from .errors import ZWOASIError, ZWOASIIOError
+from enum import IntEnum
 
 # **************************************************************************************
 
-__version__ = "0.0.0"
 
-# **************************************************************************************
+class ZWOASIBayerPattern(IntEnum):
+    """
+    Enumeration corresponding to the C enumeration ASI_BAYER_PATTERN:
 
-__license__ = "MIT"
+    ASI_BAYER_RG = 0
+    ASI_BAYER_BG = 1
+    ASI_BAYER_GR = 2
+    ASI_BAYER_GB = 3
+    """
 
+    RG = 0
+    BG = 1
+    GR = 2
+    GB = 3
 
-# **************************************************************************************
-
-__all__: list[str] = [
-    "ZWOASIBayerPattern",
-    "ZWOASIError",
-    "ZWOASIIOError",
-]
 
 # **************************************************************************************
