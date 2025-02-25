@@ -172,3 +172,18 @@ class ZWOASIErrorCode(IntEnum):
 
 
 # **************************************************************************************
+
+
+class ZWOASIBool(IntEnum):
+    """
+    Enumeration corresponding to the C enumeration ASI_BOOL:
+
+    ASI_FALSE = 0
+    ASI_TRUE  = 1
+    """
+
+    FALSE = 0
+    TRUE = 1
+
+
+# **************************************************************************************
