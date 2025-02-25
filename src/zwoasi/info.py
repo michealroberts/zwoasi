@@ -5,9 +5,9 @@
 
 # **************************************************************************************
 
-from typing import List, Optional
 from ctypes import Structure as c_Structure
 from ctypes import c_char, c_double, c_float, c_int, c_long
+from typing import List, Optional, cast
 
 from pydantic import BaseModel, Field
 
@@ -148,6 +148,60 @@ class ZWOASICameraInformation(BaseModel):
         default="",
         description="Unused field (16 bytes in C).",
     )
+
+    @classmethod
+    def from_c_types(
+        cls, c_info: "ZWOASI_CAMERA_INFORMATION_CTYPE"
+    ) -> "ZWOASICameraInformation":
+        """
+        Convert a ctypes ASI_CAMERA_INFO structure to a ZWOASICameraInformation instance.
+        """
+        name = c_info.Name.decode("utf-8").rstrip("\x00")
+
+        # Convert BayerPattern if non-zero to ZWOASIBayerPattern enum:
+        bayer_pattern = (
+            ZWOASIBayerPattern(c_info.BayerPattern)
+            if c_info.BayerPattern != 0
+            else None
+        )
+
+        # Process SupportedBins: stop when a 0 is encountered:
+        supported_binnings: List[int] = []
+        for i in range(16):
+            value = c_info.SupportedBins[i]
+            if value == 0:
+                break
+            supported_binnings.append(value)
+
+        # Process SupportedVideoFormat: stop when ZWOASIImageType.ND is encountered:
+        supported_image_formats: List[ZWOASIImageType] = []
+        for i in range(8):
+            value = c_info.SupportedVideoFormat[i]
+            if value == ZWOASIImageType.END.value:
+                break
+            supported_image_formats.append(ZWOASIImageType(value))
+
+        return cls(
+            id=cast(int, c_info.CameraID),
+            name=name,
+            maximum_height=cast(int, c_info.MaxHeight),
+            maximum_width=cast(int, c_info.MaxWidth),
+            pixel_size=cast(float, c_info.PixelSize),
+            electrons_per_adu=cast(float, c_info.ElecPerADU),
+            bit_depth=cast(int, c_info.BitDepth),
+            bayer_pattern=bayer_pattern,
+            supported_binnings=supported_binnings,
+            supported_image_formats=supported_image_formats,
+            is_color=bool(c_info.IsColorCam),
+            is_monochrome=not bool(c_info.IsColorCam),
+            is_usb3=bool(c_info.IsUSB3Camera),
+            is_usb3_host=bool(c_info.IsUSB3Host),
+            has_st4_port=bool(c_info.ST4Port),
+            has_external_trigger=bool(c_info.IsTriggerCam),
+            has_mechanical_shutter=bool(c_info.MechanicalShutter),
+            has_cooler=bool(c_info.IsCoolerCam),
+            unused=c_info.Unused.decode("utf-8").rstrip("\x00"),
+        )
 
 
 # **************************************************************************************

@@ -176,6 +176,73 @@ class TestZWOASICameraInformation(unittest.TestCase):
         self.assertTrue(information.has_cooler)
         self.assertEqual(information.unused, "unused")
 
+    def test_from_c_types(self):
+        # Create a ctypes structure with sample values:
+        c_info = ZWOASI_CAMERA_INFORMATION_CTYPE()
+        c_info.Name = b"ZWO ASI Camera\x00"
+        c_info.CameraID = 1
+        c_info.MaxHeight = 1080
+        c_info.MaxWidth = 1920
+        c_info.PixelSize = 5.6
+        c_info.ElecPerADU = 1.2
+        c_info.BitDepth = 16
+        c_info.BayerPattern = ZWOASIBayerPattern.BG.value
+
+        # Set up supported_binnings: [1, 2, 3, 4] then 0 sentinel:
+        supported_binnings = [1, 2, 3, 4]
+        for i in range(16):
+            c_info.SupportedBins[i] = (
+                supported_binnings[i] if i < len(supported_binnings) else 0
+            )
+
+        # Set up supported_video_format: [RAW8, RGB24, END] (END is sentinel):
+        supported_video_format = [
+            ZWOASIImageType.RAW8.value,
+            ZWOASIImageType.RGB24.value,
+            ZWOASIImageType.END.value,
+        ]
+
+        for i in range(8):
+            c_info.SupportedVideoFormat[i] = (
+                supported_video_format[i]
+                if i < len(supported_video_format)
+                else ZWOASIImageType.END.value
+            )
+
+        c_info.IsColorCam = 1
+        c_info.MechanicalShutter = 0
+        c_info.ST4Port = 1
+        c_info.IsCoolerCam = 0
+        c_info.IsUSB3Host = 1
+        c_info.IsUSB3Camera = 0
+        c_info.IsTriggerCam = 1
+        c_info.Unused = b"unused\x00"
+
+        model = ZWOASICameraInformation.from_c_types(c_info)
+        self.assertEqual(model.name, "ZWO ASI Camera")
+        self.assertEqual(model.id, 1)
+        self.assertEqual(model.maximum_height, 1080)
+        self.assertEqual(model.maximum_width, 1920)
+        self.assertAlmostEqual(model.pixel_size, 5.6)
+        self.assertAlmostEqual(model.electrons_per_adu, 1.2)
+        self.assertEqual(model.bit_depth, 16)
+        self.assertEqual(model.bayer_pattern, ZWOASIBayerPattern.BG)
+        self.assertEqual(model.supported_binnings, supported_binnings)
+        self.assertEqual(
+            model.supported_image_formats, [ZWOASIImageType.RAW8, ZWOASIImageType.RGB24]
+        )
+        self.assertTrue(model.is_color)
+        self.assertFalse(
+            model.is_monochrome
+        )  # is_monochrome is the opposite of is_color
+        self.assertFalse(model.is_usb3)
+        self.assertTrue(model.is_usb3_host)
+        self.assertTrue(model.has_st4_port)
+        self.assertTrue(model.has_external_trigger)
+        self.assertFalse(model.has_mechanical_shutter)
+        self.assertFalse(model.has_cooler)
+        self.assertEqual(model.unused, "unused")
+
 
 # **************************************************************************************
 
