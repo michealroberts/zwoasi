@@ -6,10 +6,38 @@
 # **************************************************************************************
 
 from typing import List, Optional
+from ctypes import Structure as c_Structure
+from ctypes import c_char, c_double, c_float, c_int, c_long
 
 from pydantic import BaseModel, Field
 
 from .enums import ZWOASIBayerPattern, ZWOASIImageType
+
+# **************************************************************************************
+
+
+class ZWOASI_CAMERA_INFORMATION_CTYPE(c_Structure):
+    _fields_ = [
+        ("Name", c_char * 64),
+        ("CameraID", c_int),
+        ("MaxHeight", c_long),
+        ("MaxWidth", c_long),
+        ("IsColorCam", c_int),
+        ("BayerPattern", c_int),
+        ("SupportedBins", c_int * 16),
+        ("SupportedVideoFormat", c_int * 8),
+        ("PixelSize", c_double),
+        ("MechanicalShutter", c_int),
+        ("ST4Port", c_int),
+        ("IsCoolerCam", c_int),
+        ("IsUSB3Host", c_int),
+        ("IsUSB3Camera", c_int),
+        ("ElecPerADU", c_float),
+        ("BitDepth", c_int),
+        ("IsTriggerCam", c_int),
+        ("Unused", c_char * 16),
+    ]
+
 
 # **************************************************************************************
 
