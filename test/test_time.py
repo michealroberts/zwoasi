@@ -18,26 +18,26 @@ from zwoasi import ZWOASI_CAMERA_DATE_TIME_CTYPE, ZWOASIDateTime
 class TestZWOASI_CAMERA_DATE_TIME_CTYPE(unittest.TestCase):
     def test_field_assignment(self):
         # Create a ctypes structure with sample values:
-        dt = ZWOASI_CAMERA_DATE_TIME_CTYPE()
-        dt.Year = 2025
-        dt.Month = 12
-        dt.Day = 31
-        dt.Hour = 23
-        dt.Minute = 59
-        dt.Second = 58
-        dt.Msecond = 500
-        dt.Usecond = 1234
-        dt.Unused = b"GPS Data"
+        c_datetime = ZWOASI_CAMERA_DATE_TIME_CTYPE()
+        c_datetime.Year = 2025
+        c_datetime.Month = 12
+        c_datetime.Day = 31
+        c_datetime.Hour = 23
+        c_datetime.Minute = 59
+        c_datetime.Second = 58
+        c_datetime.Msecond = 500
+        c_datetime.Usecond = 1234
+        c_datetime.Unused = b"GPS Data"
 
-        self.assertEqual(dt.Year, 2025)
-        self.assertEqual(dt.Month, 12)
-        self.assertEqual(dt.Day, 31)
-        self.assertEqual(dt.Hour, 23)
-        self.assertEqual(dt.Minute, 59)
-        self.assertEqual(dt.Second, 58)
-        self.assertEqual(dt.Msecond, 500)
-        self.assertEqual(dt.Usecond, 1234)
-        self.assertEqual(dt.Unused.decode("utf-8").rstrip("\x00"), "GPS Data")
+        self.assertEqual(c_datetime.Year, 2025)
+        self.assertEqual(c_datetime.Month, 12)
+        self.assertEqual(c_datetime.Day, 31)
+        self.assertEqual(c_datetime.Hour, 23)
+        self.assertEqual(c_datetime.Minute, 59)
+        self.assertEqual(c_datetime.Second, 58)
+        self.assertEqual(c_datetime.Msecond, 500)
+        self.assertEqual(c_datetime.Usecond, 1234)
+        self.assertEqual(c_datetime.Unused.decode("utf-8").rstrip("\x00"), "GPS Data")
 
 
 # **************************************************************************************
@@ -130,6 +130,31 @@ class TestZWOASIDateTime(unittest.TestCase):
         # Test that too long unused string raises a ValidationError.
         with self.assertRaises(ValidationError):
             ZWOASIDateTime(unused="a" * 65)
+
+    def test_from_c_types(self):
+        # Create a ctypes structure with sample values:
+        c_datetime = ZWOASI_CAMERA_DATE_TIME_CTYPE()
+        c_datetime.Year = 2025
+        c_datetime.Month = 12
+        c_datetime.Day = 31
+        c_datetime.Hour = 23
+        c_datetime.Minute = 59
+        c_datetime.Second = 58
+        c_datetime.Msecond = 500
+        c_datetime.Usecond = 1234
+        c_datetime.Unused = b"GPS Data"
+
+        date = ZWOASIDateTime.from_c_types(c_datetime)
+
+        self.assertEqual(date.year, 2025)
+        self.assertEqual(date.month, 12)
+        self.assertEqual(date.day, 31)
+        self.assertEqual(date.hour, 23)
+        self.assertEqual(date.minute, 59)
+        self.assertEqual(date.second, 58)
+        self.assertEqual(date.milliseconds, 500)
+        self.assertEqual(date.microseconds, 1234)
+        self.assertEqual(date.unused, "GPS Data")
 
 
 # **************************************************************************************
