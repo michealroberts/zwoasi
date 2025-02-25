@@ -21,7 +21,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  ci:
     strategy:
       matrix:
         os: [ubuntu-latest]
