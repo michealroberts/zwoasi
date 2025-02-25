@@ -19,6 +19,7 @@ from .enums import (
 )
 from .errors import ZWOASIError, ZWOASIIOError
 from .info import ZWOASI_CAMERA_INFORMATION_CTYPE, ZWOASICameraInformation
+from .time import ZWOASIDateTime
 
 # **************************************************************************************
 
@@ -40,6 +41,7 @@ __all__: list[str] = [
     "ZWOASICameraMode",
     "ZWOASICameraInformation",
     "ZWOASIControlType",
+    "ZWOASIDateTime",
     "ZWOASIError",
     "ZWOASIErrorCode",
     "ZWOASIExposureStatus",
