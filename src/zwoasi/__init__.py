@@ -8,6 +8,7 @@
 from .enums import (
     ZWOASIBayerPattern,
     ZWOASICameraMode,
+    ZWOASIErrorCode,
     ZWOASIFlipStatus,
     ZWOASIGuideDirection,
     ZWOASIImageType,
@@ -29,6 +30,7 @@ __all__: list[str] = [
     "ZWOASIBayerPattern",
     "ZWOASICameraMode",
     "ZWOASIError",
+    "ZWOASIErrorCode",
     "ZWOASIFlipStatus",
     "ZWOASIGuideDirection",
     "ZWOASIIOError",
