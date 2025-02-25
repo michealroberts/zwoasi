@@ -80,6 +80,31 @@ class TestZWOASICameraCapabilities(unittest.TestCase):
         self.assertEqual(capability.control_type, 2)
         self.assertEqual(capability.unused, "unused_data")
 
+    def test_from_c_types(self):
+        # Create an instance of the C structure with sample values.
+        caps = ZWOASI_CAMERA_CAPABILITIES_CTYPE()
+        caps.Name = b"Exposure\x00"
+        caps.Description = b"Controls the exposure time\x00"
+        caps.MaxValue = 10000
+        caps.MinValue = 10
+        caps.DefaultValue = 100
+        caps.IsAutoSupported = 1
+        caps.IsWritable = 1
+        caps.ControlType = 2
+        caps.Unused = b"unused_data\x00"
+
+        # Convert to the Pydantic model.
+        model = ZWOASICameraCapabilities.from_c_types(caps)
+        self.assertEqual(model.name, "Exposure")
+        self.assertEqual(model.description, "Controls the exposure time")
+        self.assertEqual(model.maximum_value, 10000)
+        self.assertEqual(model.minimum_value, 10)
+        self.assertEqual(model.default_value, 100)
+        self.assertTrue(model.is_auto_supported)
+        self.assertTrue(model.is_writable)
+        self.assertEqual(model.control_type, 2)
+        self.assertEqual(model.unused, "unused_data")
+
 
 # **************************************************************************************
 
