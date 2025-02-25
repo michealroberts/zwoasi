@@ -10,12 +10,40 @@ from datetime import datetime
 
 from pydantic import ValidationError
 
-from zwoasi import ZWOASIDateTime
+from zwoasi import ZWOASI_CAMERA_DATE_TIME_CTYPE, ZWOASIDateTime
 
 # **************************************************************************************
 
 
-class TestASIDateTime(unittest.TestCase):
+class TestZWOASI_CAMERA_DATE_TIME_CTYPE(unittest.TestCase):
+    def test_field_assignment(self):
+        # Create a ctypes structure with sample values:
+        dt = ZWOASI_CAMERA_DATE_TIME_CTYPE()
+        dt.Year = 2025
+        dt.Month = 12
+        dt.Day = 31
+        dt.Hour = 23
+        dt.Minute = 59
+        dt.Second = 58
+        dt.Msecond = 500
+        dt.Usecond = 1234
+        dt.Unused = b"GPS Data"
+
+        self.assertEqual(dt.Year, 2025)
+        self.assertEqual(dt.Month, 12)
+        self.assertEqual(dt.Day, 31)
+        self.assertEqual(dt.Hour, 23)
+        self.assertEqual(dt.Minute, 59)
+        self.assertEqual(dt.Second, 58)
+        self.assertEqual(dt.Msecond, 500)
+        self.assertEqual(dt.Usecond, 1234)
+        self.assertEqual(dt.Unused.decode("utf-8").rstrip("\x00"), "GPS Data")
+
+
+# **************************************************************************************
+
+
+class TestZWOASIDateTime(unittest.TestCase):
     def test_default_instance(self):
         dt = ZWOASIDateTime()
 

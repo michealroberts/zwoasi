@@ -5,9 +5,28 @@
 
 # **************************************************************************************
 
+from ctypes import Structure as c_Structure
+from ctypes import c_char, c_int
 from datetime import datetime
 
 from pydantic import BaseModel, Field
+
+# **************************************************************************************
+
+
+class ZWOASI_CAMERA_DATE_TIME_CTYPE(c_Structure):
+    _fields_ = [
+        ("Year", c_int),
+        ("Month", c_int),
+        ("Day", c_int),
+        ("Hour", c_int),
+        ("Minute", c_int),
+        ("Second", c_int),
+        ("Msecond", c_int),
+        ("Usecond", c_int),  # Minimum unit: 0.1us
+        ("Unused", c_char * 64),
+    ]
+
 
 # **************************************************************************************
 
