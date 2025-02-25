@@ -113,6 +113,51 @@ class TestZWOASIGPSData(unittest.TestCase):
         self.assertEqual(gps_data.satellite_number, 8)
         self.assertEqual(gps_data.unused, "GPS Data Unused")
 
+    def test_from_c_types(self):
+        # Create and populate a C struct instance with sample values:
+        c_datetime = ZWOASI_CAMERA_DATE_TIME_CTYPE()
+        c_datetime.Year = 2025
+        c_datetime.Month = 12
+        c_datetime.Day = 31
+        c_datetime.Hour = 23
+        c_datetime.Minute = 59
+        c_datetime.Second = 58
+        c_datetime.Msecond = 500
+        c_datetime.Usecond = 2500
+        dt_unused = "DatetimeUnused"
+        c_datetime.Unused = dt_unused.encode("utf-8") + b"\x00" * (64 - len(dt_unused))
+
+        c_gps_data = ZWOASI_GPS_DATA_CTYPE()
+        c_gps_data.Datetime = c_datetime
+        c_gps_data.Latitude = 45.1234
+        c_gps_data.Longitude = -93.4567
+        c_gps_data.Altitude = 5000
+        c_gps_data.SatelliteNum = 8
+        gps_unused = "GPSUnused"
+        c_gps_data.Unused = gps_unused.encode("utf-8") + b"\x00" * (
+            64 - len(gps_unused)
+        )
+
+        # Convert using from_c_types.
+        gps_data = ZWOASIGPSData.from_c_types(c_gps_data)
+
+        # Assert that the fields are correctly converted.
+        self.assertEqual(gps_data.datetime.year, 2025)
+        self.assertEqual(gps_data.datetime.month, 12)
+        self.assertEqual(gps_data.datetime.day, 31)
+        self.assertEqual(gps_data.datetime.hour, 23)
+        self.assertEqual(gps_data.datetime.minute, 59)
+        self.assertEqual(gps_data.datetime.second, 58)
+        self.assertEqual(gps_data.datetime.milliseconds, 500)
+        self.assertEqual(gps_data.datetime.microseconds, 2500)
+        self.assertEqual(gps_data.datetime.unused, dt_unused)
+
+        self.assertAlmostEqual(gps_data.latitude, 45.1234)
+        self.assertAlmostEqual(gps_data.longitude, -93.4567)
+        self.assertEqual(gps_data.altitude, 5000)
+        self.assertEqual(gps_data.satellite_number, 8)
+        self.assertEqual(gps_data.unused, gps_unused)
+
 
 # **************************************************************************************
 

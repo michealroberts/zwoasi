@@ -7,6 +7,7 @@
 
 from ctypes import Structure as c_Structure
 from ctypes import c_char, c_double, c_int
+from typing import cast
 
 from pydantic import BaseModel, Field
 
@@ -68,6 +69,20 @@ class ZWOASIGPSData(BaseModel):
         description="Unused field (up to 64 characters).",
         max_length=64,
     )
+
+    @classmethod
+    def from_c_types(cls, c_gps_data: "ZWOASI_GPS_DATA_CTYPE") -> "ZWOASIGPSData":
+        """
+        Convert a ctypes ASI_GPS_DATA structure to a ZWOASIGPSData instance.
+        """
+        return cls(
+            datetime=ZWOASIDateTime.from_c_types(c_gps_data.Datetime),
+            latitude=cast(float, c_gps_data.Latitude),
+            longitude=cast(float, c_gps_data.Longitude),
+            altitude=cast(int, c_gps_data.Altitude),
+            satellite_number=cast(int, c_gps_data.SatelliteNum),
+            unused=c_gps_data.Unused.decode("utf-8").rstrip("\x00"),
+        )
 
 
 # **************************************************************************************
