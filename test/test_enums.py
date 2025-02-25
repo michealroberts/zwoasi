@@ -9,6 +9,7 @@ import unittest
 
 from zwoasi import (
     ZWOASIBayerPattern,
+    ZWOASICameraMode,
     ZWOASIFlipStatus,
     ZWOASIGuideDirection,
     ZWOASIImageType,
@@ -147,3 +148,56 @@ class TestZWOASIFlipStatus(unittest.TestCase):
 
 
 # **************************************************************************************
+
+
+class TestZWOASICameraMode(unittest.TestCase):
+    def test_enum_values(self):
+        """
+        Verify that the integer values match the C enum specification.
+        """
+        self.assertEqual(ZWOASICameraMode.NORMAL, 0)
+        self.assertEqual(ZWOASICameraMode.TRIGGER_SOFT_EDGE, 1)
+        self.assertEqual(ZWOASICameraMode.TRIGGER_RISE_EDGE, 2)
+        self.assertEqual(ZWOASICameraMode.TRIGGER_FALL_EDGE, 3)
+        self.assertEqual(ZWOASICameraMode.TRIGGER_SOFT_LEVEL, 4)
+        self.assertEqual(ZWOASICameraMode.TRIGGER_HIGH_LEVEL, 5)
+        self.assertEqual(ZWOASICameraMode.TRIGGER_LOW_LEVEL, 6)
+        self.assertEqual(ZWOASICameraMode.END, -1)
+
+    def test_enum_member_by_name(self):
+        """
+        Access enum members by name to ensure they match the expected values.
+        """
+        self.assertIs(ZWOASICameraMode["NORMAL"], ZWOASICameraMode.NORMAL)
+        self.assertIs(
+            ZWOASICameraMode["TRIGGER_SOFT_EDGE"], ZWOASICameraMode.TRIGGER_SOFT_EDGE
+        )
+        self.assertIs(
+            ZWOASICameraMode["TRIGGER_RISE_EDGE"], ZWOASICameraMode.TRIGGER_RISE_EDGE
+        )
+        self.assertIs(
+            ZWOASICameraMode["TRIGGER_FALL_EDGE"], ZWOASICameraMode.TRIGGER_FALL_EDGE
+        )
+        self.assertIs(
+            ZWOASICameraMode["TRIGGER_SOFT_LEVEL"], ZWOASICameraMode.TRIGGER_SOFT_LEVEL
+        )
+        self.assertIs(
+            ZWOASICameraMode["TRIGGER_HIGH_LEVEL"], ZWOASICameraMode.TRIGGER_HIGH_LEVEL
+        )
+        self.assertIs(
+            ZWOASICameraMode["TRIGGER_LOW_LEVEL"], ZWOASICameraMode.TRIGGER_LOW_LEVEL
+        )
+        self.assertIs(ZWOASICameraMode["END"], ZWOASICameraMode.END)
+
+    def test_enum_member_from_int(self):
+        """
+        Cast integers to the enum to ensure they resolve to the correct members.
+        """
+        self.assertIs(ZWOASICameraMode(0), ZWOASICameraMode.NORMAL)
+        self.assertIs(ZWOASICameraMode(1), ZWOASICameraMode.TRIGGER_SOFT_EDGE)
+        self.assertIs(ZWOASICameraMode(2), ZWOASICameraMode.TRIGGER_RISE_EDGE)
+        self.assertIs(ZWOASICameraMode(3), ZWOASICameraMode.TRIGGER_FALL_EDGE)
+        self.assertIs(ZWOASICameraMode(4), ZWOASICameraMode.TRIGGER_SOFT_LEVEL)
+        self.assertIs(ZWOASICameraMode(5), ZWOASICameraMode.TRIGGER_HIGH_LEVEL)
+        self.assertIs(ZWOASICameraMode(6), ZWOASICameraMode.TRIGGER_LOW_LEVEL)
+        self.assertIs(ZWOASICameraMode(-1), ZWOASICameraMode.END)
