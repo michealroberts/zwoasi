@@ -8,7 +8,58 @@
 import unittest
 from datetime import datetime
 
-from zwoasi import ZWOASIDateTime, ZWOASIGPSData
+from zwoasi import (
+    ZWOASI_CAMERA_DATE_TIME_CTYPE,
+    ZWOASI_GPS_DATA_CTYPE,
+    ZWOASIDateTime,
+    ZWOASIGPSData,
+)
+
+# **************************************************************************************
+
+
+class TestZWOASI_GPS_DATA_CTYPE(unittest.TestCase):
+    def test_field_assignment(self):
+        # Create a ctypes structure with sample values:
+        c_gps_data = ZWOASI_GPS_DATA_CTYPE()
+
+        c_datetime = ZWOASI_CAMERA_DATE_TIME_CTYPE()
+        c_datetime.Year = 2025
+        c_datetime.Month = 12
+        c_datetime.Day = 31
+        c_datetime.Hour = 23
+        c_datetime.Minute = 59
+        c_datetime.Second = 58
+        c_datetime.Msecond = 500
+        c_datetime.Usecond = 2500
+        c_datetime.Unused = b"GPS Data"
+        c_gps_data.Datetime = c_datetime
+        c_gps_data.Latitude = 45.1234
+        c_gps_data.Longitude = -93.4567
+        c_gps_data.Altitude = 5000
+        c_gps_data.SatelliteNum = 8
+        gps_unused = "GPS Data"
+        c_gps_data.Unused = gps_unused.encode("utf-8") + b"\x00" * (
+            64 - len(gps_unused)
+        )
+
+        self.assertEqual(c_gps_data.Datetime.Year, 2025)
+        self.assertEqual(c_gps_data.Datetime.Month, 12)
+        self.assertEqual(c_gps_data.Datetime.Day, 31)
+        self.assertEqual(c_gps_data.Datetime.Hour, 23)
+        self.assertEqual(c_gps_data.Datetime.Minute, 59)
+        self.assertEqual(c_gps_data.Datetime.Second, 58)
+        self.assertEqual(c_gps_data.Datetime.Msecond, 500)
+        self.assertEqual(c_gps_data.Datetime.Usecond, 2500)
+        self.assertEqual(
+            c_gps_data.Datetime.Unused.decode("utf-8").rstrip("\x00"), "GPS Data"
+        )
+        self.assertAlmostEqual(c_gps_data.Latitude, 45.1234)
+        self.assertAlmostEqual(c_gps_data.Longitude, -93.4567)
+        self.assertEqual(c_gps_data.Altitude, 5000)
+        self.assertEqual(c_gps_data.SatelliteNum, 8)
+        self.assertEqual(c_gps_data.Unused.decode("utf-8").rstrip("\x00"), "GPS Data")
+
 
 # **************************************************************************************
 

@@ -5,9 +5,26 @@
 
 # **************************************************************************************
 
+from ctypes import Structure as c_Structure
+from ctypes import c_char, c_double, c_int
+
 from pydantic import BaseModel, Field
 
-from .time import ZWOASIDateTime
+from .time import ZWOASI_CAMERA_DATE_TIME_CTYPE, ZWOASIDateTime
+
+# **************************************************************************************
+
+
+class ZWOASI_GPS_DATA_CTYPE(c_Structure):
+    _fields_ = [
+        ("Datetime", ZWOASI_CAMERA_DATE_TIME_CTYPE),
+        ("Latitude", c_double),
+        ("Longitude", c_double),
+        ("Altitude", c_int),
+        ("SatelliteNum", c_int),
+        ("Unused", c_char * 64),
+    ]
+
 
 # **************************************************************************************
 
