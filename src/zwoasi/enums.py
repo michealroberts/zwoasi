@@ -187,3 +187,74 @@ class ZWOASIBool(IntEnum):
 
 
 # **************************************************************************************
+
+
+class ZWOASIControlType(IntEnum):
+    """
+    Enumeration corresponding to the C enumeration ASI_CONTROL_TYPE.
+
+    ASI_GAIN                    = 0   // Gain control
+    ASI_EXPOSURE                = 1   // Exposure control
+    ASI_GAMMA                   = 2   // Gamma control
+    ASI_WB_R                    = 3   // White balance (red channel)
+    ASI_WB_B                    = 4   // White balance (blue channel)
+    ASI_OFFSET                  = 5   // Offset control
+    ASI_BANDWIDTHOVERLOAD       = 6   // Bandwidth overload control
+    ASI_OVERCLOCK               = 7   // Overclock setting
+    ASI_TEMPERATURE             = 8   // return 10*temperature
+    ASI_FLIP                    = 9   // Flip control
+    ASI_AUTO_MAX_GAIN           = 10  // Automatic maximum gain
+    ASI_AUTO_MAX_EXP            = 11  // Automatic maximum exposure (microsecond)
+    ASI_AUTO_TARGET_BRIGHTNESS  = 12  // Automatic target brightness
+    ASI_HARDWARE_BIN            = 13  // Hardware binning control
+    ASI_HIGH_SPEED_MODE         = 14  // High speed mode control
+    ASI_COOLER_POWER_PERC       = 15  // Cooler power percentage control
+    ASI_TARGET_TEMP             = 16  // Target temperature (not multiplied by 10)
+    ASI_COOLER_ON               = 17  // Cooler on/off control
+    ASI_MONO_BIN                = 18  // Monochrome binning (reduces grid artifacts in color cameras)
+    ASI_FAN_ON                  = 19  // Fan on/off control
+    ASI_PATTERN_ADJUST          = 20  // Pattern adjustment control
+    ASI_ANTI_DEW_HEATER         = 21  // Anti-dew heater control
+    ASI_FAN_ADJUST              = 22  // Fan speed adjustment control
+    ASI_PWRLED_BRIGNT           = 23  // Power LED brightness control
+    ASI_USBHUB_RESET            = 24  // USB hub reset control
+    ASI_GPS_SUPPORT             = 25  // GPS support indicator
+    ASI_GPS_START_LINE          = 26  // GPS start line position
+    ASI_GPS_END_LINE            = 27  // GPS end line position
+    ASI_ROLLING_INTERVAL        = 28  // Rolling shutter interval (microsecond)
+    """
+
+    GAIN = 0
+    EXPOSURE = 1
+    GAMMA = 2
+    WHITE_BALANCE_RED_CHANNEL = 3
+    WHITE_BALANCE_BLUE_CHANNEL = 4
+    OFFSET = 5
+    BANDWIDTH_OVERLOAD = 6
+    OVERCLOCK = 7
+    TEMPERATURE_READING = 8
+    IMAGE_FLIP = 9
+    AUTO_MAXIMUM_GAIN = 10
+    AUTO_MAXIMUM_EXPOSURE = 11
+    AUTO_TARGET_BRIGHTNESS = 12
+    HARDWARE_BINNING = 13
+    HIGH_SPEED_MODE = 14
+    COOLER_POWER_PERCENTAGE = 15
+    TARGET_TEMPERATURE = 16
+    COOLER_ON_OFF = 17
+    MONOCHROME_BINNING = 18
+    FAN_ON_OFF = 19
+    PATTERN_ADJUSTMENT = 20
+    ANTI_DEW_HEATER = 21
+    FAN_SPEED_ADJUSTMENT = 22
+    POWER_LED_BRIGHTNESS = 23
+    USB_HUB_RESET = 24
+    GPS_SUPPORT_INDICATOR = 25
+    GPS_START_LINE_POSITION = 26
+    GPS_END_LINE_POSITION = 27
+    ROLLING_SHUTTER_INTERVAL = 28
+    BRIGHTNESS = OFFSET
+    AUTO_MAX_BRIGHTNESS = AUTO_TARGET_BRIGHTNESS
+
+
+# **************************************************************************************

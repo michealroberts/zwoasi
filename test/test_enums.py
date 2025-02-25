@@ -11,6 +11,7 @@ from zwoasi import (
     ZWOASIBayerPattern,
     ZWOASIBool,
     ZWOASICameraMode,
+    ZWOASIControlType,
     ZWOASIErrorCode,
     ZWOASIFlipStatus,
     ZWOASIGuideDirection,
@@ -372,3 +373,160 @@ class TestZWOASIBool(unittest.TestCase):
 
 
 # **************************************************************************************
+
+
+class TestZWOASIControlType(unittest.TestCase):
+    def test_enum_values(self):
+        self.assertEqual(ZWOASIControlType.GAIN, 0)
+        self.assertEqual(ZWOASIControlType.EXPOSURE, 1)
+        self.assertEqual(ZWOASIControlType.GAMMA, 2)
+        self.assertEqual(ZWOASIControlType.WHITE_BALANCE_RED_CHANNEL, 3)
+        self.assertEqual(ZWOASIControlType.WHITE_BALANCE_BLUE_CHANNEL, 4)
+        self.assertEqual(ZWOASIControlType.OFFSET, 5)
+        self.assertEqual(ZWOASIControlType.BANDWIDTH_OVERLOAD, 6)
+        self.assertEqual(ZWOASIControlType.OVERCLOCK, 7)
+        self.assertEqual(ZWOASIControlType.TEMPERATURE_READING, 8)
+        self.assertEqual(ZWOASIControlType.IMAGE_FLIP, 9)
+        self.assertEqual(ZWOASIControlType.AUTO_MAXIMUM_GAIN, 10)
+        self.assertEqual(ZWOASIControlType.AUTO_MAXIMUM_EXPOSURE, 11)
+        self.assertEqual(ZWOASIControlType.AUTO_TARGET_BRIGHTNESS, 12)
+        self.assertEqual(ZWOASIControlType.HARDWARE_BINNING, 13)
+        self.assertEqual(ZWOASIControlType.HIGH_SPEED_MODE, 14)
+        self.assertEqual(ZWOASIControlType.COOLER_POWER_PERCENTAGE, 15)
+        self.assertEqual(ZWOASIControlType.TARGET_TEMPERATURE, 16)
+        self.assertEqual(ZWOASIControlType.COOLER_ON_OFF, 17)
+        self.assertEqual(ZWOASIControlType.MONOCHROME_BINNING, 18)
+        self.assertEqual(ZWOASIControlType.FAN_ON_OFF, 19)
+        self.assertEqual(ZWOASIControlType.PATTERN_ADJUSTMENT, 20)
+        self.assertEqual(ZWOASIControlType.ANTI_DEW_HEATER, 21)
+        self.assertEqual(ZWOASIControlType.FAN_SPEED_ADJUSTMENT, 22)
+        self.assertEqual(ZWOASIControlType.POWER_LED_BRIGHTNESS, 23)
+        self.assertEqual(ZWOASIControlType.USB_HUB_RESET, 24)
+        self.assertEqual(ZWOASIControlType.GPS_SUPPORT_INDICATOR, 25)
+        self.assertEqual(ZWOASIControlType.GPS_START_LINE_POSITION, 26)
+        self.assertEqual(ZWOASIControlType.GPS_END_LINE_POSITION, 27)
+        self.assertEqual(ZWOASIControlType.ROLLING_SHUTTER_INTERVAL, 28)
+
+    def test_enum_member_by_name(self):
+        self.assertIs(ZWOASIControlType["GAIN"], ZWOASIControlType.GAIN)
+        self.assertIs(ZWOASIControlType["EXPOSURE"], ZWOASIControlType.EXPOSURE)
+        self.assertIs(ZWOASIControlType["GAMMA"], ZWOASIControlType.GAMMA)
+        self.assertIs(
+            ZWOASIControlType["WHITE_BALANCE_RED_CHANNEL"],
+            ZWOASIControlType.WHITE_BALANCE_RED_CHANNEL,
+        )
+        self.assertIs(
+            ZWOASIControlType["WHITE_BALANCE_BLUE_CHANNEL"],
+            ZWOASIControlType.WHITE_BALANCE_BLUE_CHANNEL,
+        )
+        self.assertIs(ZWOASIControlType["OFFSET"], ZWOASIControlType.OFFSET)
+        self.assertIs(
+            ZWOASIControlType["BANDWIDTH_OVERLOAD"],
+            ZWOASIControlType.BANDWIDTH_OVERLOAD,
+        )
+        self.assertIs(ZWOASIControlType["OVERCLOCK"], ZWOASIControlType.OVERCLOCK)
+        self.assertIs(
+            ZWOASIControlType["TEMPERATURE_READING"],
+            ZWOASIControlType.TEMPERATURE_READING,
+        )
+        self.assertIs(ZWOASIControlType["IMAGE_FLIP"], ZWOASIControlType.IMAGE_FLIP)
+        self.assertIs(
+            ZWOASIControlType["AUTO_MAXIMUM_GAIN"], ZWOASIControlType.AUTO_MAXIMUM_GAIN
+        )
+        self.assertIs(
+            ZWOASIControlType["AUTO_MAXIMUM_EXPOSURE"],
+            ZWOASIControlType.AUTO_MAXIMUM_EXPOSURE,
+        )
+        self.assertIs(
+            ZWOASIControlType["AUTO_TARGET_BRIGHTNESS"],
+            ZWOASIControlType.AUTO_TARGET_BRIGHTNESS,
+        )
+        self.assertIs(
+            ZWOASIControlType["HARDWARE_BINNING"], ZWOASIControlType.HARDWARE_BINNING
+        )
+        self.assertIs(
+            ZWOASIControlType["HIGH_SPEED_MODE"], ZWOASIControlType.HIGH_SPEED_MODE
+        )
+        self.assertIs(
+            ZWOASIControlType["COOLER_POWER_PERCENTAGE"],
+            ZWOASIControlType.COOLER_POWER_PERCENTAGE,
+        )
+        self.assertIs(
+            ZWOASIControlType["TARGET_TEMPERATURE"],
+            ZWOASIControlType.TARGET_TEMPERATURE,
+        )
+        self.assertIs(
+            ZWOASIControlType["COOLER_ON_OFF"], ZWOASIControlType.COOLER_ON_OFF
+        )
+        self.assertIs(
+            ZWOASIControlType["MONOCHROME_BINNING"],
+            ZWOASIControlType.MONOCHROME_BINNING,
+        )
+        self.assertIs(ZWOASIControlType["FAN_ON_OFF"], ZWOASIControlType.FAN_ON_OFF)
+        self.assertIs(
+            ZWOASIControlType["PATTERN_ADJUSTMENT"],
+            ZWOASIControlType.PATTERN_ADJUSTMENT,
+        )
+        self.assertIs(
+            ZWOASIControlType["ANTI_DEW_HEATER"], ZWOASIControlType.ANTI_DEW_HEATER
+        )
+        self.assertIs(
+            ZWOASIControlType["FAN_SPEED_ADJUSTMENT"],
+            ZWOASIControlType.FAN_SPEED_ADJUSTMENT,
+        )
+        self.assertIs(
+            ZWOASIControlType["POWER_LED_BRIGHTNESS"],
+            ZWOASIControlType.POWER_LED_BRIGHTNESS,
+        )
+        self.assertIs(
+            ZWOASIControlType["USB_HUB_RESET"], ZWOASIControlType.USB_HUB_RESET
+        )
+        self.assertIs(
+            ZWOASIControlType["GPS_SUPPORT_INDICATOR"],
+            ZWOASIControlType.GPS_SUPPORT_INDICATOR,
+        )
+        self.assertIs(
+            ZWOASIControlType["GPS_START_LINE_POSITION"],
+            ZWOASIControlType.GPS_START_LINE_POSITION,
+        )
+        self.assertIs(
+            ZWOASIControlType["GPS_END_LINE_POSITION"],
+            ZWOASIControlType.GPS_END_LINE_POSITION,
+        )
+        self.assertIs(
+            ZWOASIControlType["ROLLING_SHUTTER_INTERVAL"],
+            ZWOASIControlType.ROLLING_SHUTTER_INTERVAL,
+        )
+
+    def test_enum_member_from_int(self):
+        self.assertIs(ZWOASIControlType(0), ZWOASIControlType.GAIN)
+        self.assertIs(ZWOASIControlType(1), ZWOASIControlType.EXPOSURE)
+        self.assertIs(ZWOASIControlType(2), ZWOASIControlType.GAMMA)
+        self.assertIs(ZWOASIControlType(3), ZWOASIControlType.WHITE_BALANCE_RED_CHANNEL)
+        self.assertIs(
+            ZWOASIControlType(4), ZWOASIControlType.WHITE_BALANCE_BLUE_CHANNEL
+        )
+        self.assertIs(ZWOASIControlType(5), ZWOASIControlType.OFFSET)
+        self.assertIs(ZWOASIControlType(6), ZWOASIControlType.BANDWIDTH_OVERLOAD)
+        self.assertIs(ZWOASIControlType(7), ZWOASIControlType.OVERCLOCK)
+        self.assertIs(ZWOASIControlType(8), ZWOASIControlType.TEMPERATURE_READING)
+        self.assertIs(ZWOASIControlType(9), ZWOASIControlType.IMAGE_FLIP)
+        self.assertIs(ZWOASIControlType(10), ZWOASIControlType.AUTO_MAXIMUM_GAIN)
+        self.assertIs(ZWOASIControlType(11), ZWOASIControlType.AUTO_MAXIMUM_EXPOSURE)
+        self.assertIs(ZWOASIControlType(12), ZWOASIControlType.AUTO_TARGET_BRIGHTNESS)
+        self.assertIs(ZWOASIControlType(13), ZWOASIControlType.HARDWARE_BINNING)
+        self.assertIs(ZWOASIControlType(14), ZWOASIControlType.HIGH_SPEED_MODE)
+        self.assertIs(ZWOASIControlType(15), ZWOASIControlType.COOLER_POWER_PERCENTAGE)
+        self.assertIs(ZWOASIControlType(16), ZWOASIControlType.TARGET_TEMPERATURE)
+        self.assertIs(ZWOASIControlType(17), ZWOASIControlType.COOLER_ON_OFF)
+        self.assertIs(ZWOASIControlType(18), ZWOASIControlType.MONOCHROME_BINNING)
+        self.assertIs(ZWOASIControlType(19), ZWOASIControlType.FAN_ON_OFF)
+        self.assertIs(ZWOASIControlType(20), ZWOASIControlType.PATTERN_ADJUSTMENT)
+        self.assertIs(ZWOASIControlType(21), ZWOASIControlType.ANTI_DEW_HEATER)
+        self.assertIs(ZWOASIControlType(22), ZWOASIControlType.FAN_SPEED_ADJUSTMENT)
+        self.assertIs(ZWOASIControlType(23), ZWOASIControlType.POWER_LED_BRIGHTNESS)
+        self.assertIs(ZWOASIControlType(24), ZWOASIControlType.USB_HUB_RESET)
+        self.assertIs(ZWOASIControlType(25), ZWOASIControlType.GPS_SUPPORT_INDICATOR)
+        self.assertIs(ZWOASIControlType(26), ZWOASIControlType.GPS_START_LINE_POSITION)
+        self.assertIs(ZWOASIControlType(27), ZWOASIControlType.GPS_END_LINE_POSITION)
+        self.assertIs(ZWOASIControlType(28), ZWOASIControlType.ROLLING_SHUTTER_INTERVAL)
