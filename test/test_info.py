@@ -7,7 +7,91 @@
 
 import unittest
 
-from zwoasi import ZWOASIBayerPattern, ZWOASICameraInformation, ZWOASIImageType
+from zwoasi import (
+    ZWOASI_CAMERA_INFORMATION_CTYPE,
+    ZWOASIBayerPattern,
+    ZWOASICameraInformation,
+    ZWOASIImageType,
+)
+
+# **************************************************************************************
+
+
+class TestZWOASI_CAMERA_INFORMATION_CTYPE(unittest.TestCase):
+    def test_field_assignment(self):
+        # Create a ctypes structure with sample values:
+        c_info = ZWOASI_CAMERA_INFORMATION_CTYPE()
+        c_info.Name = b"ZWO ASI Camera\x00"
+        c_info.CameraID = 1
+        c_info.MaxHeight = 1080
+        c_info.MaxWidth = 1920
+        c_info.PixelSize = 5.6
+        c_info.ElecPerADU = 1.2
+        c_info.BitDepth = 16
+        c_info.BayerPattern = 1
+
+        # Set up supported_binnings: [1, 2, 3, 4] then 0 sentinel:
+        supported_binnings = [1, 2, 3, 4]
+        for i in range(16):
+            if i < len(supported_binnings):
+                c_info.SupportedBins[i] = supported_binnings[i]
+            else:
+                c_info.SupportedBins[i] = 0
+
+        # Set up supported_video_format: [RAW8, RGB24, END] (END is sentinel).
+        # For testing, RAW8=0, RGB24=1, END=-1:
+        supported_video_format = [
+            ZWOASIImageType.RAW8.value,
+            ZWOASIImageType.RGB24.value,
+            ZWOASIImageType.END.value,
+        ]
+
+        for i in range(8):
+            if i < len(supported_video_format):
+                c_info.SupportedVideoFormat[i] = supported_video_format[i]
+            else:
+                c_info.SupportedVideoFormat[i] = -1
+
+        c_info.IsColorCam = 1
+        c_info.MechanicalShutter = 0
+        c_info.ST4Port = 1
+        c_info.IsCoolerCam = 0
+        c_info.IsUSB3Host = 1
+        c_info.IsUSB3Camera = 0
+        c_info.IsTriggerCam = 1
+        c_info.Unused = b"unused\x00"
+
+        self.assertEqual(c_info.Name.decode("utf-8").rstrip("\x00"), "ZWO ASI Camera")
+        self.assertEqual(c_info.CameraID, 1)
+        self.assertEqual(c_info.MaxHeight, 1080)
+        self.assertEqual(c_info.MaxWidth, 1920)
+        self.assertEqual(c_info.BayerPattern, ZWOASIBayerPattern.BG)
+        self.assertAlmostEqual(c_info.PixelSize, 5.6)
+        self.assertAlmostEqual(c_info.ElecPerADU, 1.2)
+        self.assertEqual(c_info.BitDepth, 16)
+
+        for i in range(len(supported_binnings)):
+            self.assertEqual(c_info.SupportedBins[i], supported_binnings[i])
+
+        for i in range(len(supported_binnings), 16):
+            self.assertEqual(c_info.SupportedBins[i], 0)
+
+        self.assertEqual(c_info.SupportedVideoFormat[0], 0)
+        self.assertEqual(c_info.SupportedVideoFormat[1], 1)
+        self.assertEqual(c_info.SupportedVideoFormat[2], -1)
+
+        for i in range(3, 8):
+            self.assertEqual(c_info.SupportedVideoFormat[i], -1)
+
+        self.assertEqual(c_info.IsColorCam, 1)
+        self.assertEqual(c_info.MechanicalShutter, 0)
+        self.assertEqual(c_info.ST4Port, 1)
+        self.assertEqual(c_info.IsCoolerCam, 0)
+        self.assertEqual(c_info.IsUSB3Host, 1)
+        self.assertEqual(c_info.IsUSB3Camera, 0)
+        self.assertEqual(c_info.IsTriggerCam, 1)
+        self.assertEqual(c_info.Unused.decode("utf-8").rstrip("\x00"), "unused")
+
 
 # **************************************************************************************
 

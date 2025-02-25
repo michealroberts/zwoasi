@@ -17,7 +17,7 @@ from .enums import (
     ZWOASIImageType,
 )
 from .errors import ZWOASIError, ZWOASIIOError
-from .info import ZWOASICameraInformation
+from .info import ZWOASI_CAMERA_INFORMATION_CTYPE, ZWOASICameraInformation
 
 # **************************************************************************************
 
@@ -31,6 +31,7 @@ __license__ = "MIT"
 # **************************************************************************************
 
 __all__: list[str] = [
+    "ZWOASI_CAMERA_INFORMATION_CTYPE",
     "ZWOASIBayerPattern",
     "ZWOASIBool",
     "ZWOASICameraMode",
