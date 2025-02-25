@@ -8,6 +8,7 @@
 from ctypes import Structure as c_Structure
 from ctypes import c_char, c_int
 from datetime import datetime
+from typing import cast
 
 from pydantic import BaseModel, Field
 
@@ -97,6 +98,25 @@ class ZWOASIDateTime(BaseModel):
         description="Unused field for concatenated strings (up to 64 characters).",
         max_length=64,
     )
+
+    @classmethod
+    def from_c_types(
+        cls, c_datetime: ZWOASI_CAMERA_DATE_TIME_CTYPE
+    ) -> "ZWOASIDateTime":
+        """
+        Convert a ctypes ASI_DATE_TIME structure to a ZWOASIDateTime instance.
+        """
+        return cls(
+            year=cast(int, c_datetime.Year),
+            month=cast(int, c_datetime.Month),
+            day=cast(int, c_datetime.Day),
+            hour=cast(int, c_datetime.Hour),
+            minute=cast(int, c_datetime.Minute),
+            second=cast(int, c_datetime.Second),
+            milliseconds=cast(int, c_datetime.Msecond),
+            microseconds=cast(int, c_datetime.Usecond),
+            unused=c_datetime.Unused.decode("utf-8").rstrip("\x00"),
+        )
 
 
 # **************************************************************************************
