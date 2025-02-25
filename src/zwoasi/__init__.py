@@ -5,7 +5,7 @@
 
 # **************************************************************************************
 
-from .enums import ZWOASIBayerPattern
+from .enums import ZWOASIBayerPattern, ZWOASIImageType
 from .errors import ZWOASIError, ZWOASIIOError
 
 # **************************************************************************************
@@ -23,6 +23,7 @@ __all__: list[str] = [
     "ZWOASIBayerPattern",
     "ZWOASIError",
     "ZWOASIIOError",
+    "ZWOASIImageType",
 ]
 
 # **************************************************************************************
