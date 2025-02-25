@@ -7,7 +7,12 @@
 
 import unittest
 
-from zwoasi import ZWOASIBayerPattern, ZWOASIGuideDirection, ZWOASIImageType
+from zwoasi import (
+    ZWOASIBayerPattern,
+    ZWOASIFlipStatus,
+    ZWOASIGuideDirection,
+    ZWOASIImageType,
+)
 
 # **************************************************************************************
 
@@ -107,6 +112,38 @@ class TestZWOASIGuideDirection(unittest.TestCase):
         self.assertIs(ZWOASIGuideDirection(1), ZWOASIGuideDirection.SOUTH)
         self.assertIs(ZWOASIGuideDirection(2), ZWOASIGuideDirection.EAST)
         self.assertIs(ZWOASIGuideDirection(3), ZWOASIGuideDirection.WEST)
+
+
+# **************************************************************************************
+
+
+class TestZWOASIFlipStatus(unittest.TestCase):
+    def test_enum_values(self):
+        """
+        Ensure that each enum member has the correct numeric value.
+        """
+        self.assertEqual(ZWOASIFlipStatus.NONE, 0)
+        self.assertEqual(ZWOASIFlipStatus.HORIZ, 1)
+        self.assertEqual(ZWOASIFlipStatus.VERT, 2)
+        self.assertEqual(ZWOASIFlipStatus.BOTH, 3)
+
+    def test_enum_member_by_name(self):
+        """
+        Access enum members by name and ensure they match the expected value.
+        """
+        self.assertIs(ZWOASIFlipStatus["NONE"], ZWOASIFlipStatus.NONE)
+        self.assertIs(ZWOASIFlipStatus["HORIZ"], ZWOASIFlipStatus.HORIZ)
+        self.assertIs(ZWOASIFlipStatus["VERT"], ZWOASIFlipStatus.VERT)
+        self.assertIs(ZWOASIFlipStatus["BOTH"], ZWOASIFlipStatus.BOTH)
+
+    def test_enum_member_from_int(self):
+        """
+        Cast integers to the enum and ensure they map to the correct members.
+        """
+        self.assertIs(ZWOASIFlipStatus(0), ZWOASIFlipStatus.NONE)
+        self.assertIs(ZWOASIFlipStatus(1), ZWOASIFlipStatus.HORIZ)
+        self.assertIs(ZWOASIFlipStatus(2), ZWOASIFlipStatus.VERT)
+        self.assertIs(ZWOASIFlipStatus(3), ZWOASIFlipStatus.BOTH)
 
 
 # **************************************************************************************

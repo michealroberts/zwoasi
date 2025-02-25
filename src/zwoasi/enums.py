@@ -67,3 +67,22 @@ class ZWOASIGuideDirection(IntEnum):
 
 
 # **************************************************************************************
+
+
+class ZWOASIFlipStatus(IntEnum):
+    """
+    Enumeration corresponding to the C enumeration ASI_FLIP_STATUS:
+
+    ASI_FLIP_NONE   = 0  (original)
+    ASI_FLIP_HORIZ  = 1  (horizontal flip)
+    ASI_FLIP_VERT   = 2  (vertical flip)
+    ASI_FLIP_BOTH   = 3  (both horizontal and vertical flip)
+    """
+
+    NONE = 0
+    HORIZ = 1
+    VERT = 2
+    BOTH = 3
+
+
+# **************************************************************************************

@@ -5,7 +5,12 @@
 
 # **************************************************************************************
 
-from .enums import ZWOASIBayerPattern, ZWOASIGuideDirection, ZWOASIImageType
+from .enums import (
+    ZWOASIBayerPattern,
+    ZWOASIFlipStatus,
+    ZWOASIGuideDirection,
+    ZWOASIImageType,
+)
 from .errors import ZWOASIError, ZWOASIIOError
 
 # **************************************************************************************
@@ -22,6 +27,7 @@ __license__ = "MIT"
 __all__: list[str] = [
     "ZWOASIBayerPattern",
     "ZWOASIError",
+    "ZWOASIFlipStatus",
     "ZWOASIGuideDirection",
     "ZWOASIIOError",
     "ZWOASIImageType",
