@@ -7,6 +7,8 @@
 
 from typing import Optional
 
+from .enums import ZWOASIErrorCode
+
 # **************************************************************************************
 
 
@@ -30,9 +32,11 @@ class ZWOASIIOError(ZWOASIError):
     :param error_code: An optional integer error code returned by the SDK.
     """
 
-    def __init__(self, message: str, error_code: Optional[int] = None) -> None:
+    def __init__(
+        self, message: str, error_code: Optional[ZWOASIErrorCode] = None
+    ) -> None:
         super().__init__(message)
-        self.error_code = error_code
+        self.error_code = int(error_code) if error_code is not None else None
 
 
 # **************************************************************************************
