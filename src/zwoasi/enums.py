@@ -80,8 +80,8 @@ class ZWOASIFlipStatus(IntEnum):
     """
 
     NONE = 0
-    HORIZ = 1
-    VERT = 2
+    HORIZONTAL = 1
+    VERTICAL = 2
     BOTH = 3
 
 
