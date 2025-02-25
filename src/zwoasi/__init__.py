@@ -17,6 +17,7 @@ from .enums import (
     ZWOASIImageType,
 )
 from .errors import ZWOASIError, ZWOASIIOError
+from .info import ZWOASICameraInformation
 
 # **************************************************************************************
 
@@ -33,6 +34,7 @@ __all__: list[str] = [
     "ZWOASIBayerPattern",
     "ZWOASIBool",
     "ZWOASICameraMode",
+    "ZWOASICameraInformation",
     "ZWOASIControlType",
     "ZWOASIError",
     "ZWOASIErrorCode",
