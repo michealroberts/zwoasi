@@ -13,6 +13,7 @@ from zwoasi import (
     ZWOASICameraMode,
     ZWOASIControlType,
     ZWOASIErrorCode,
+    ZWOASIExposureStatus,
     ZWOASIFlipStatus,
     ZWOASIGuideDirection,
     ZWOASIImageType,
@@ -530,3 +531,29 @@ class TestZWOASIControlType(unittest.TestCase):
         self.assertIs(ZWOASIControlType(26), ZWOASIControlType.GPS_START_LINE_POSITION)
         self.assertIs(ZWOASIControlType(27), ZWOASIControlType.GPS_END_LINE_POSITION)
         self.assertIs(ZWOASIControlType(28), ZWOASIControlType.ROLLING_SHUTTER_INTERVAL)
+
+
+# **************************************************************************************
+
+
+class TestASIExposureStatus(unittest.TestCase):
+    def test_enum_values(self):
+        self.assertEqual(ZWOASIExposureStatus.IDLE, 0)
+        self.assertEqual(ZWOASIExposureStatus.WORKING, 1)
+        self.assertEqual(ZWOASIExposureStatus.SUCCESS, 2)
+        self.assertEqual(ZWOASIExposureStatus.FAILED, 3)
+
+    def test_enum_member_by_name(self):
+        self.assertIs(ZWOASIExposureStatus["IDLE"], ZWOASIExposureStatus.IDLE)
+        self.assertIs(ZWOASIExposureStatus["WORKING"], ZWOASIExposureStatus.WORKING)
+        self.assertIs(ZWOASIExposureStatus["SUCCESS"], ZWOASIExposureStatus.SUCCESS)
+        self.assertIs(ZWOASIExposureStatus["FAILED"], ZWOASIExposureStatus.FAILED)
+
+    def test_enum_member_from_int(self):
+        self.assertIs(ZWOASIExposureStatus(0), ZWOASIExposureStatus.IDLE)
+        self.assertIs(ZWOASIExposureStatus(1), ZWOASIExposureStatus.WORKING)
+        self.assertIs(ZWOASIExposureStatus(2), ZWOASIExposureStatus.SUCCESS)
+        self.assertIs(ZWOASIExposureStatus(3), ZWOASIExposureStatus.FAILED)
+
+
+# **************************************************************************************

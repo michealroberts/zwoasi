@@ -201,6 +201,25 @@ class ZWOASIErrorCode(IntEnum):
 # **************************************************************************************
 
 
+class ZWOASIExposureStatus(IntEnum):
+    """
+    Enumeration corresponding to the C enumeration ASI_EXPOSURE_STATUS.
+
+    ASI_EXP_IDLE      = 0   // idle state, you can start exposure now
+    ASI_EXP_WORKING   = 1   // exposing
+    ASI_EXP_SUCCESS   = 2   // exposure finished and waiting for download
+    ASI_EXP_FAILED    = 3   // exposure failed, you need to start exposure again
+    """
+
+    IDLE = 0
+    WORKING = 1
+    SUCCESS = 2
+    FAILED = 3
+
+
+# **************************************************************************************
+
+
 class ZWOASIFlipStatus(IntEnum):
     """
     Enumeration corresponding to the C enumeration ASI_FLIP_STATUS:
