@@ -14,7 +14,7 @@ classifiers = [
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.13"
-dependencies = []
+dependencies = ["pydantic>=2.10.6"]
 
 [project.urls]
 "Source" = "https://github.com/michealroberts/zwoasi"
@@ -41,5 +41,14 @@ dev = [
 pythonpath = [".", "src"]
 asyncio_default_fixture_loop_scope = ["session"]
 
+[tool.mypy]
+plugins = ["pydantic.mypy"]
+
+[tool.hatch]
+packages = [{ include = "zwoasi", root = "src" }]
+
 [tool.hatch.build.targets.wheel]
-packages = ["src/zwoasi"]
+include = ["sdk/**/*"]
+
+[tool.hatch.build.targets.sdist]
+include = ["sdk/**/*"]
