@@ -10,6 +10,7 @@ import unittest
 from zwoasi import (
     ZWOASIBayerPattern,
     ZWOASICameraMode,
+    ZWOASIErrorCode,
     ZWOASIFlipStatus,
     ZWOASIGuideDirection,
     ZWOASIImageType,
@@ -201,3 +202,146 @@ class TestZWOASICameraMode(unittest.TestCase):
         self.assertIs(ZWOASICameraMode(5), ZWOASICameraMode.TRIGGER_HIGH_LEVEL)
         self.assertIs(ZWOASICameraMode(6), ZWOASICameraMode.TRIGGER_LOW_LEVEL)
         self.assertIs(ZWOASICameraMode(-1), ZWOASICameraMode.END)
+
+
+# **************************************************************************************
+
+
+class TestZWOASIErrorCode(unittest.TestCase):
+    def test_enum_values(self):
+        """
+        Verify that the integer values match the C enum specification.
+        """
+        self.assertEqual(ZWOASIErrorCode.SUCCESS, 0)
+        self.assertEqual(ZWOASIErrorCode.INVALID_INDEX, 1)
+        self.assertEqual(ZWOASIErrorCode.INVALID_ID, 2)
+        self.assertEqual(ZWOASIErrorCode.INVALID_CONTROL_TYPE, 3)
+        self.assertEqual(ZWOASIErrorCode.CAMERA_CLOSED, 4)
+        self.assertEqual(ZWOASIErrorCode.CAMERA_REMOVED, 5)
+        self.assertEqual(ZWOASIErrorCode.INVALID_PATH, 6)
+        self.assertEqual(ZWOASIErrorCode.INVALID_FILEFORMAT, 7)
+        self.assertEqual(ZWOASIErrorCode.INVALID_VIDEO_SIZE, 8)
+        self.assertEqual(ZWOASIErrorCode.INVALID_IMAGE_TYPE, 9)
+        self.assertEqual(ZWOASIErrorCode.START_POSITION_OUT_OF_BOUNDARY, 10)
+        self.assertEqual(ZWOASIErrorCode.TIMEOUT, 11)
+        self.assertEqual(ZWOASIErrorCode.INVALID_SEQUENCE, 12)
+        self.assertEqual(ZWOASIErrorCode.BUFFER_TOO_SMALL, 13)
+        self.assertEqual(ZWOASIErrorCode.VIDEO_MODE_ACTIVE, 14)
+        self.assertEqual(ZWOASIErrorCode.EXPOSURE_IN_PROGRESS, 15)
+        self.assertEqual(ZWOASIErrorCode.GENERAL_ERROR, 16)
+        self.assertEqual(ZWOASIErrorCode.INVALID_MODE, 17)
+        self.assertEqual(ZWOASIErrorCode.GPS_NOT_SUPPORTED, 18)
+        self.assertEqual(ZWOASIErrorCode.INVALID_GPS_VERSION, 19)
+        self.assertEqual(ZWOASIErrorCode.INVALID_GPS_FPGA, 20)
+        self.assertEqual(ZWOASIErrorCode.INVALID_GPS_PARAM_OUT_OF_RANGE, 21)
+        self.assertEqual(ZWOASIErrorCode.INVALID_GPS_DATA, 22)
+        self.assertEqual(ZWOASIErrorCode.END, 23)
+
+    def test_enum_member_by_name(self):
+        """
+        Access enum members by name to ensure they match the expected values.
+        """
+        self.assertIs(ZWOASIErrorCode["SUCCESS"], ZWOASIErrorCode.SUCCESS)
+        self.assertIs(ZWOASIErrorCode["INVALID_INDEX"], ZWOASIErrorCode.INVALID_INDEX)
+        self.assertIs(ZWOASIErrorCode["INVALID_ID"], ZWOASIErrorCode.INVALID_ID)
+        self.assertIs(
+            ZWOASIErrorCode["INVALID_CONTROL_TYPE"],
+            ZWOASIErrorCode.INVALID_CONTROL_TYPE,
+        )
+        self.assertIs(ZWOASIErrorCode["CAMERA_CLOSED"], ZWOASIErrorCode.CAMERA_CLOSED)
+        self.assertIs(
+            ZWOASIErrorCode["CAMERA_REMOVED"],
+            ZWOASIErrorCode.CAMERA_REMOVED,
+        )
+        self.assertIs(ZWOASIErrorCode["INVALID_PATH"], ZWOASIErrorCode.INVALID_PATH)
+        self.assertIs(
+            ZWOASIErrorCode["INVALID_FILEFORMAT"],
+            ZWOASIErrorCode.INVALID_FILEFORMAT,
+        )
+        self.assertIs(
+            ZWOASIErrorCode["INVALID_VIDEO_SIZE"], ZWOASIErrorCode.INVALID_VIDEO_SIZE
+        )
+        self.assertIs(
+            ZWOASIErrorCode["INVALID_IMAGE_TYPE"],
+            ZWOASIErrorCode.INVALID_IMAGE_TYPE,
+        )
+        self.assertIs(
+            ZWOASIErrorCode["START_POSITION_OUT_OF_BOUNDARY"],
+            ZWOASIErrorCode.START_POSITION_OUT_OF_BOUNDARY,
+        )
+        self.assertIs(ZWOASIErrorCode["TIMEOUT"], ZWOASIErrorCode.TIMEOUT)
+        self.assertIs(
+            ZWOASIErrorCode["INVALID_SEQUENCE"],
+            ZWOASIErrorCode.INVALID_SEQUENCE,
+        )
+        self.assertIs(
+            ZWOASIErrorCode["BUFFER_TOO_SMALL"],
+            ZWOASIErrorCode.BUFFER_TOO_SMALL,
+        )
+        self.assertIs(
+            ZWOASIErrorCode["VIDEO_MODE_ACTIVE"],
+            ZWOASIErrorCode.VIDEO_MODE_ACTIVE,
+        )
+        self.assertIs(
+            ZWOASIErrorCode["EXPOSURE_IN_PROGRESS"],
+            ZWOASIErrorCode.EXPOSURE_IN_PROGRESS,
+        )
+        self.assertIs(ZWOASIErrorCode["GENERAL_ERROR"], ZWOASIErrorCode.GENERAL_ERROR)
+        self.assertIs(ZWOASIErrorCode["INVALID_MODE"], ZWOASIErrorCode.INVALID_MODE)
+        self.assertIs(
+            ZWOASIErrorCode["GPS_NOT_SUPPORTED"],
+            ZWOASIErrorCode.GPS_NOT_SUPPORTED,
+        )
+        self.assertIs(
+            ZWOASIErrorCode["INVALID_GPS_VERSION"],
+            ZWOASIErrorCode.INVALID_GPS_VERSION,
+        )
+        self.assertIs(
+            ZWOASIErrorCode["INVALID_GPS_FPGA"],
+            ZWOASIErrorCode.INVALID_GPS_FPGA,
+        )
+        self.assertIs(
+            ZWOASIErrorCode["INVALID_GPS_PARAM_OUT_OF_RANGE"],
+            ZWOASIErrorCode.INVALID_GPS_PARAM_OUT_OF_RANGE,
+        )
+        self.assertIs(
+            ZWOASIErrorCode["INVALID_GPS_DATA"],
+            ZWOASIErrorCode.INVALID_GPS_DATA,
+        )
+        self.assertIs(ZWOASIErrorCode["END"], ZWOASIErrorCode.END)
+
+    def test_enum_member_from_int(self):
+        """
+        Cast integers to the enum to ensure they resolve to the correct members.
+        """
+        self.assertIs(ZWOASIErrorCode(0), ZWOASIErrorCode.SUCCESS)
+        self.assertIs(ZWOASIErrorCode(1), ZWOASIErrorCode.INVALID_INDEX)
+        self.assertIs(ZWOASIErrorCode(2), ZWOASIErrorCode.INVALID_ID)
+        self.assertIs(ZWOASIErrorCode(3), ZWOASIErrorCode.INVALID_CONTROL_TYPE)
+        self.assertIs(ZWOASIErrorCode(4), ZWOASIErrorCode.CAMERA_CLOSED)
+        self.assertIs(ZWOASIErrorCode(5), ZWOASIErrorCode.CAMERA_REMOVED)
+        self.assertIs(ZWOASIErrorCode(6), ZWOASIErrorCode.INVALID_PATH)
+        self.assertIs(ZWOASIErrorCode(7), ZWOASIErrorCode.INVALID_FILEFORMAT)
+        self.assertIs(ZWOASIErrorCode(8), ZWOASIErrorCode.INVALID_VIDEO_SIZE)
+        self.assertIs(ZWOASIErrorCode(9), ZWOASIErrorCode.INVALID_IMAGE_TYPE)
+        self.assertIs(
+            ZWOASIErrorCode(10), ZWOASIErrorCode.START_POSITION_OUT_OF_BOUNDARY
+        )
+        self.assertIs(ZWOASIErrorCode(11), ZWOASIErrorCode.TIMEOUT)
+        self.assertIs(ZWOASIErrorCode(12), ZWOASIErrorCode.INVALID_SEQUENCE)
+        self.assertIs(ZWOASIErrorCode(13), ZWOASIErrorCode.BUFFER_TOO_SMALL)
+        self.assertIs(ZWOASIErrorCode(14), ZWOASIErrorCode.VIDEO_MODE_ACTIVE)
+        self.assertIs(ZWOASIErrorCode(15), ZWOASIErrorCode.EXPOSURE_IN_PROGRESS)
+        self.assertIs(ZWOASIErrorCode(16), ZWOASIErrorCode.GENERAL_ERROR)
+        self.assertIs(ZWOASIErrorCode(17), ZWOASIErrorCode.INVALID_MODE)
+        self.assertIs(ZWOASIErrorCode(18), ZWOASIErrorCode.GPS_NOT_SUPPORTED)
+        self.assertIs(ZWOASIErrorCode(19), ZWOASIErrorCode.INVALID_GPS_VERSION)
+        self.assertIs(ZWOASIErrorCode(20), ZWOASIErrorCode.INVALID_GPS_FPGA)
+        self.assertIs(
+            ZWOASIErrorCode(21), ZWOASIErrorCode.INVALID_GPS_PARAM_OUT_OF_RANGE
+        )
+        self.assertIs(ZWOASIErrorCode(22), ZWOASIErrorCode.INVALID_GPS_DATA)
+        self.assertIs(ZWOASIErrorCode(23), ZWOASIErrorCode.END)
+
+
+# **************************************************************************************
