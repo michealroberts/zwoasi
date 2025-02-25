@@ -7,6 +7,7 @@
 
 from .enums import (
     ZWOASIBayerPattern,
+    ZWOASICameraMode,
     ZWOASIFlipStatus,
     ZWOASIGuideDirection,
     ZWOASIImageType,
@@ -26,6 +27,7 @@ __license__ = "MIT"
 
 __all__: list[str] = [
     "ZWOASIBayerPattern",
+    "ZWOASICameraMode",
     "ZWOASIError",
     "ZWOASIFlipStatus",
     "ZWOASIGuideDirection",

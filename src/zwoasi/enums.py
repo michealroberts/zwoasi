@@ -86,3 +86,30 @@ class ZWOASIFlipStatus(IntEnum):
 
 
 # **************************************************************************************
+
+
+class ZWOASICameraMode(IntEnum):
+    """
+    Enumeration corresponding to the C enumeration ASI_CAMERA_MODE:
+
+    ASI_MODE_NORMAL       =  0
+    ASI_MODE_TRIG_SOFT_EDGE  =  1
+    ASI_MODE_TRIG_RISE_EDGE  =  2
+    ASI_MODE_TRIG_FALL_EDGE  =  3
+    ASI_MODE_TRIG_SOFT_LEVEL =  4
+    ASI_MODE_TRIG_HIGH_LEVEL =  5
+    ASI_MODE_TRIG_LOW_LEVEL  =  6
+    ASI_MODE_END         = -1
+    """
+
+    NORMAL = 0
+    TRIGGER_SOFT_EDGE = 1
+    TRIGGER_RISE_EDGE = 2
+    TRIGGER_FALL_EDGE = 3
+    TRIGGER_SOFT_LEVEL = 4
+    TRIGGER_HIGH_LEVEL = 5
+    TRIGGER_LOW_LEVEL = 6
+    END = -1
+
+
+# **************************************************************************************
