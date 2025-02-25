@@ -5,7 +5,7 @@
 
 # **************************************************************************************
 
-from .capabilities import ZWOASICameraCapabilities
+from .capabilities import ZWOASI_CAMERA_CAPABILITIES_CTYPE, ZWOASICameraCapabilities
 from .enums import (
     ZWOASIBayerPattern,
     ZWOASIBool,
@@ -32,6 +32,7 @@ __license__ = "MIT"
 # **************************************************************************************
 
 __all__: list[str] = [
+    "ZWOASI_CAMERA_CAPABILITIES_CTYPE",
     "ZWOASI_CAMERA_INFORMATION_CTYPE",
     "ZWOASIBayerPattern",
     "ZWOASIBool",

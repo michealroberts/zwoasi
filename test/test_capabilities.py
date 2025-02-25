@@ -7,7 +7,38 @@
 
 import unittest
 
-from zwoasi import ZWOASICameraCapabilities
+from zwoasi import ZWOASI_CAMERA_CAPABILITIES_CTYPE, ZWOASICameraCapabilities
+
+# **************************************************************************************
+
+
+class TestZWOASI_CAMERA_CAPABILITIES_CTYPE(unittest.TestCase):
+    def test_field_assignment(self):
+        # Create an instance and assign test values.
+        caps = ZWOASI_CAMERA_CAPABILITIES_CTYPE()
+        caps.Name = b"Exposure\x00"
+        caps.Description = b"Exposure control for camera\x00"
+        caps.MaxValue = 10000
+        caps.MinValue = 10
+        caps.DefaultValue = 100
+        caps.IsAutoSupported = 1
+        caps.IsWritable = 1
+        caps.ControlType = 2
+        caps.Unused = b"unused\x00"
+
+        self.assertEqual(caps.Name.decode("utf-8").rstrip("\x00"), "Exposure")
+        self.assertEqual(
+            caps.Description.decode("utf-8").rstrip("\x00"),
+            "Exposure control for camera",
+        )
+        self.assertEqual(caps.MaxValue, 10000)
+        self.assertEqual(caps.MinValue, 10)
+        self.assertEqual(caps.DefaultValue, 100)
+        self.assertEqual(caps.IsAutoSupported, 1)
+        self.assertEqual(caps.IsWritable, 1)
+        self.assertEqual(caps.ControlType, 2)
+        self.assertEqual(caps.Unused.decode("utf-8").rstrip("\x00"), "unused")
+
 
 # **************************************************************************************
 

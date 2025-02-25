@@ -5,7 +5,27 @@
 
 # **************************************************************************************
 
+from ctypes import Structure as c_Structure
+from ctypes import c_char, c_int, c_long
+
 from pydantic import BaseModel, Field
+
+# **************************************************************************************
+
+
+class ZWOASI_CAMERA_CAPABILITIES_CTYPE(c_Structure):
+    _fields_ = [
+        ("Name", c_char * 64),
+        ("Description", c_char * 128),
+        ("MaxValue", c_long),
+        ("MinValue", c_long),
+        ("DefaultValue", c_long),
+        ("IsAutoSupported", c_int),
+        ("IsWritable", c_int),
+        ("ControlType", c_int),
+        ("Unused", c_char * 32),
+    ]
+
 
 # **************************************************************************************
 
