@@ -7,7 +7,7 @@
 
 import unittest
 
-from zwoasi import ZWOASIBayerPattern, ZWOASIImageType
+from zwoasi import ZWOASIBayerPattern, ZWOASIGuideDirection, ZWOASIImageType
 
 # **************************************************************************************
 
@@ -75,6 +75,38 @@ class TestZWOASIImageType(unittest.TestCase):
         self.assertIs(ZWOASIImageType(2), ZWOASIImageType.RAW16)
         self.assertIs(ZWOASIImageType(3), ZWOASIImageType.Y8)
         self.assertIs(ZWOASIImageType(-1), ZWOASIImageType.END)
+
+
+# **************************************************************************************
+
+
+class TestZWOASIGuideDirection(unittest.TestCase):
+    def test_enum_values(self):
+        """
+        Ensure that each enum member has the correct numeric value.
+        """
+        self.assertEqual(ZWOASIGuideDirection.NORTH, 0)
+        self.assertEqual(ZWOASIGuideDirection.SOUTH, 1)
+        self.assertEqual(ZWOASIGuideDirection.EAST, 2)
+        self.assertEqual(ZWOASIGuideDirection.WEST, 3)
+
+    def test_enum_member_by_name(self):
+        """
+        Access enum members by name and ensure they match the expected value.
+        """
+        self.assertIs(ZWOASIGuideDirection["NORTH"], ZWOASIGuideDirection.NORTH)
+        self.assertIs(ZWOASIGuideDirection["SOUTH"], ZWOASIGuideDirection.SOUTH)
+        self.assertIs(ZWOASIGuideDirection["EAST"], ZWOASIGuideDirection.EAST)
+        self.assertIs(ZWOASIGuideDirection["WEST"], ZWOASIGuideDirection.WEST)
+
+    def test_enum_member_from_int(self):
+        """
+        Cast integers to the enum and ensure they map to the correct members.
+        """
+        self.assertIs(ZWOASIGuideDirection(0), ZWOASIGuideDirection.NORTH)
+        self.assertIs(ZWOASIGuideDirection(1), ZWOASIGuideDirection.SOUTH)
+        self.assertIs(ZWOASIGuideDirection(2), ZWOASIGuideDirection.EAST)
+        self.assertIs(ZWOASIGuideDirection(3), ZWOASIGuideDirection.WEST)
 
 
 # **************************************************************************************

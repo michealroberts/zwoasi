@@ -48,3 +48,22 @@ class ZWOASIImageType(IntEnum):
 
 
 # **************************************************************************************
+
+
+class ZWOASIGuideDirection(IntEnum):
+    """
+    Enumeration corresponding to the C enumeration ASI_GUIDE_DIRECTION:
+
+    ASI_GUIDE_NORTH = 0
+    ASI_GUIDE_SOUTH = 1
+    ASI_GUIDE_EAST  = 2
+    ASI_GUIDE_WEST  = 3
+    """
+
+    NORTH = 0
+    SOUTH = 1
+    EAST = 2
+    WEST = 3
+
+
+# **************************************************************************************
