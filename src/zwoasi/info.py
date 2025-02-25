@@ -96,7 +96,7 @@ class ZWOASICameraInformation(BaseModel):
         ),
     )
 
-    supported_video_format: List[ZWOASIImageType] = Field(
+    supported_image_formats: List[ZWOASIImageType] = Field(
         default_factory=list,
         description=(
             "Supported video/image formats. "

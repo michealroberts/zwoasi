@@ -113,7 +113,7 @@ class TestZWOASICameraInformation(unittest.TestCase):
         self.assertEqual(information.bit_depth, 1)
         self.assertIsNone(information.bayer_pattern)
         self.assertEqual(information.supported_binnings, [1, 2])
-        self.assertEqual(information.supported_video_format, [])
+        self.assertEqual(information.supported_image_formats, [])
         self.assertFalse(information.is_color)
         self.assertTrue(information.is_monochrome)
         self.assertFalse(information.is_usb3)
@@ -138,7 +138,7 @@ class TestZWOASICameraInformation(unittest.TestCase):
             bit_depth=16,
             bayer_pattern=ZWOASIBayerPattern.BG,
             supported_binnings=[1, 2, 3, 4],
-            supported_video_format=[
+            supported_image_formats=[
                 ZWOASIImageType.RAW8,
                 ZWOASIImageType.RGB24,
                 ZWOASIImageType.END,
@@ -163,7 +163,7 @@ class TestZWOASICameraInformation(unittest.TestCase):
         self.assertEqual(information.bayer_pattern, ZWOASIBayerPattern.BG)
         self.assertEqual(information.supported_binnings, [1, 2, 3, 4])
         self.assertEqual(
-            information.supported_video_format,
+            information.supported_image_formats,
             [ZWOASIImageType.RAW8, ZWOASIImageType.RGB24, ZWOASIImageType.END],
         )
         self.assertTrue(information.is_color)
