@@ -5,6 +5,7 @@
 
 # **************************************************************************************
 
+from .capabilities import ZWOASICameraCapabilities
 from .enums import (
     ZWOASIBayerPattern,
     ZWOASIBool,
@@ -34,6 +35,7 @@ __all__: list[str] = [
     "ZWOASI_CAMERA_INFORMATION_CTYPE",
     "ZWOASIBayerPattern",
     "ZWOASIBool",
+    "ZWOASICameraCapabilities",
     "ZWOASICameraMode",
     "ZWOASICameraInformation",
     "ZWOASIControlType",
