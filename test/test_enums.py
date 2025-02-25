@@ -9,6 +9,7 @@ import unittest
 
 from zwoasi import (
     ZWOASIBayerPattern,
+    ZWOASIBool,
     ZWOASICameraMode,
     ZWOASIErrorCode,
     ZWOASIFlipStatus,
@@ -342,6 +343,32 @@ class TestZWOASIErrorCode(unittest.TestCase):
         )
         self.assertIs(ZWOASIErrorCode(22), ZWOASIErrorCode.INVALID_GPS_DATA)
         self.assertIs(ZWOASIErrorCode(23), ZWOASIErrorCode.END)
+
+
+# **************************************************************************************
+
+
+class TestZWOASIBool(unittest.TestCase):
+    def test_enum_values(self):
+        """
+        Verify that the integer values match the C enum specification.
+        """
+        self.assertEqual(ZWOASIBool.FALSE, 0)
+        self.assertEqual(ZWOASIBool.TRUE, 1)
+
+    def test_enum_member_by_name(self):
+        """
+        Access enum members by name to ensure they match the expected values.
+        """
+        self.assertIs(ZWOASIBool["FALSE"], ZWOASIBool.FALSE)
+        self.assertIs(ZWOASIBool["TRUE"], ZWOASIBool.TRUE)
+
+    def test_enum_member_from_int(self):
+        """
+        Cast integers to the enum to ensure they resolve to the correct members.
+        """
+        self.assertIs(ZWOASIBool(0), ZWOASIBool.FALSE)
+        self.assertIs(ZWOASIBool(1), ZWOASIBool.TRUE)
 
 
 # **************************************************************************************
