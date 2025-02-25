@@ -82,5 +82,28 @@ class ZWOASICameraCapabilities(BaseModel):
         description="Unused field (16 bytes in C).",
     )
 
+    @classmethod
+    def from_c_types(
+        cls, c_capabilities: ZWOASI_CAMERA_CAPABILITIES_CTYPE
+    ) -> "ZWOASICameraCapabilities":
+        """
+        Convert a ctypes ZWOASI_CAMERA_CAPABILITIES_CTYPE structure to a ZWOASICameraCapabilities instance.
+        """
+        name = c_capabilities.Name.decode("utf-8").rstrip("\x00")
+
+        description = c_capabilities.Description.decode("utf-8").rstrip("\x00")
+
+        return cls(
+            name=name,
+            description=description,
+            maximum_value=c_capabilities.MaxValue,
+            minimum_value=c_capabilities.MinValue,
+            default_value=c_capabilities.DefaultValue,
+            is_auto_supported=bool(c_capabilities.IsAutoSupported),
+            is_writable=bool(c_capabilities.IsWritable),
+            control_type=c_capabilities.ControlType,
+            unused=c_capabilities.Unused.decode("utf-8").rstrip("\x00"),
+        )
+
 
 # **************************************************************************************
