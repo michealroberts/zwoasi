@@ -19,7 +19,7 @@ from .enums import (
 )
 from .errors import ZWOASIError, ZWOASIIOError
 from .info import ZWOASI_CAMERA_INFORMATION_CTYPE, ZWOASICameraInformation
-from .time import ZWOASIDateTime
+from .time import ZWOASI_CAMERA_DATE_TIME_CTYPE, ZWOASIDateTime
 
 # **************************************************************************************
 
@@ -34,6 +34,7 @@ __license__ = "MIT"
 
 __all__: list[str] = [
     "ZWOASI_CAMERA_CAPABILITIES_CTYPE",
+    "ZWOASI_CAMERA_DATE_TIME_CTYPE",
     "ZWOASI_CAMERA_INFORMATION_CTYPE",
     "ZWOASIBayerPattern",
     "ZWOASIBool",
