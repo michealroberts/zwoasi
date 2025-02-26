@@ -40,5 +40,18 @@ class ZWOASICameraSupportedMode(BaseModel):
 
         raise ValueError("supported_mode must contain at most 16 items")
 
+    @classmethod
+    def from_c_types(
+        cls, c_mode: "ZWOASI_CAMERA_SUPPORTED_MODE_CTYPE"
+    ) -> "ZWOASICameraSupportedMode":
+        # Process SupportedCameraMode: stop when a 0 is encountered:
+        modes: List[int] = []
+        for i in range(16):
+            value = c_mode.SupportedCameraMode[i]
+            if value == 0:
+                break
+            modes.append(value)
+        return cls(supported_mode=modes)
+
 
 # **************************************************************************************

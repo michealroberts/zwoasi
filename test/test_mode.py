@@ -74,6 +74,35 @@ class TestZWOASICameraSupportedMode(unittest.TestCase):
             "supported_mode must contain at most 16 items", str(context.exception)
         )
 
+    def test_from_c_types_full(self):
+        """Test conversion when all 16 modes are set."""
+        c_mode = ZWOASI_CAMERA_SUPPORTED_MODE_CTYPE()
+        test_modes = list(range(1, 17))  # [1, 2, ..., 16]
+        for i in range(16):
+            c_mode.SupportedCameraMode[i] = test_modes[i]
+        model = ZWOASICameraSupportedMode.from_c_types(c_mode)
+        # Since no sentinel encountered, our logic stops at first 0,
+        # but here all 16 values are non-zero, so we return the full list.
+        self.assertEqual(model.supported_mode, test_modes)
+
+    def test_from_c_types_partial(self):
+        """Test conversion when only part of the array is set and then a 0 is encountered."""
+        c_mode = ZWOASI_CAMERA_SUPPORTED_MODE_CTYPE()
+        test_modes = [10, 20, 30, 40]
+        # Fill array: first four values, then 0 for the rest.
+        for i in range(16):
+            c_mode.SupportedCameraMode[i] = test_modes[i] if i < len(test_modes) else 0
+        model = ZWOASICameraSupportedMode.from_c_types(c_mode)
+        self.assertEqual(model.supported_mode, test_modes)
+
+    def test_from_c_types_empty(self):
+        """Test conversion when the array is all zeros."""
+        c_mode = ZWOASI_CAMERA_SUPPORTED_MODE_CTYPE()
+        for i in range(16):
+            c_mode.SupportedCameraMode[i] = 0
+        model = ZWOASICameraSupportedMode.from_c_types(c_mode)
+        self.assertEqual(model.supported_mode, [])
+
 
 # **************************************************************************************
 
