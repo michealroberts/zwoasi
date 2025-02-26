@@ -7,7 +7,7 @@
 
 from typing import Optional
 
-from .enums import ZWOASIErrorCode
+from .enums import ZWOASIErrorCode, ZWOASIExposureStatus
 
 # **************************************************************************************
 
@@ -37,6 +37,22 @@ class ZWOASIIOError(ZWOASIError):
     ) -> None:
         super().__init__(message)
         self.error_code = int(error_code) if error_code is not None else None
+
+
+# **************************************************************************************
+
+
+class ZWOASIExposureError(ZWOASIError):
+    """
+    Exception class for errors returned when attempting to get the exposure frame
+    from the :mod:`zwoasi` module.
+    """
+
+    def __init__(
+        self, message: str, status_code: Optional[ZWOASIExposureStatus] = None
+    ) -> None:
+        super().__init__(message)
+        self.status_code = int(status_code) if status_code is not None else None
 
 
 # **************************************************************************************
