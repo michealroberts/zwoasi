@@ -5,9 +5,20 @@
 
 # **************************************************************************************
 
+from ctypes import Structure as c_Structure
+from ctypes import c_int
 from typing import List
 
 from pydantic import BaseModel, Field, field_validator
+
+# **************************************************************************************
+
+
+class ZWOASI_CAMERA_SUPPORTED_MODE_CTYPE(c_Structure):
+    _fields_ = [
+        ("SupportedCameraMode", c_int * 16),
+    ]
+
 
 # **************************************************************************************
 

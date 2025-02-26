@@ -9,7 +9,40 @@ import unittest
 
 from pydantic import ValidationError
 
-from zwoasi import ZWOASICameraSupportedMode
+from zwoasi import ZWOASI_CAMERA_SUPPORTED_MODE_CTYPE, ZWOASICameraSupportedMode
+
+# **************************************************************************************
+
+
+class TestZWOASI_CAMERA_SUPPORTED_MODE_CTYPE(unittest.TestCase):
+    def test_full_assignment(self):
+        """Test that all 16 values can be assigned and read correctly."""
+        instance = ZWOASI_CAMERA_SUPPORTED_MODE_CTYPE()
+        test_modes = list(range(1, 17))  # [1, 2, ..., 16]
+        for i in range(16):
+            instance.SupportedCameraMode[i] = test_modes[i]
+
+        for i in range(16):
+            self.assertEqual(instance.SupportedCameraMode[i], test_modes[i])
+
+    def test_partial_assignment_with_sentinel(self):
+        """
+        Test that if only part of the array is assigned and the remainder is zero,
+        the structure reflects the sentinel value (0) for unassigned positions.
+        """
+        instance = ZWOASI_CAMERA_SUPPORTED_MODE_CTYPE()
+        test_modes = [10, 20, 30, 40]  # fewer than 16 values
+        for i in range(16):
+            if i < len(test_modes):
+                instance.SupportedCameraMode[i] = test_modes[i]
+            else:
+                instance.SupportedCameraMode[i] = 0
+
+        for i in range(len(test_modes)):
+            self.assertEqual(instance.SupportedCameraMode[i], test_modes[i])
+        for i in range(len(test_modes), 16):
+            self.assertEqual(instance.SupportedCameraMode[i], 0)
+
 
 # **************************************************************************************
 

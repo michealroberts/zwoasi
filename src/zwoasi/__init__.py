@@ -20,7 +20,7 @@ from .enums import (
 from .errors import ZWOASIError, ZWOASIExposureError, ZWOASIIOError
 from .gps import ZWOASI_GPS_DATA_CTYPE, ZWOASIGPSData
 from .info import ZWOASI_CAMERA_INFORMATION_CTYPE, ZWOASICameraInformation
-from .mode import ZWOASICameraSupportedMode
+from .mode import ZWOASI_CAMERA_SUPPORTED_MODE_CTYPE, ZWOASICameraSupportedMode
 from .time import ZWOASI_CAMERA_DATE_TIME_CTYPE, ZWOASIDateTime
 
 # **************************************************************************************
@@ -38,6 +38,7 @@ __all__: list[str] = [
     "ZWOASI_CAMERA_CAPABILITIES_CTYPE",
     "ZWOASI_CAMERA_DATE_TIME_CTYPE",
     "ZWOASI_CAMERA_INFORMATION_CTYPE",
+    "ZWOASI_CAMERA_SUPPORTED_MODE_CTYPE",
     "ZWOASI_GPS_DATA_CTYPE",
     "ZWOASIBayerPattern",
     "ZWOASIBool",
