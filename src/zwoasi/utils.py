@@ -7,6 +7,7 @@
 
 from pathlib import Path
 from platform import machine, system
+from typing import Optional
 
 # **************************************************************************************
 
@@ -90,6 +91,21 @@ def get_asi_libary_path(version: str) -> Path:
 
     # Return the base sdk_path relative to where it is needed:
     return Path(sdk_path)
+
+
+# **************************************************************************************
+
+
+def is_hexadecimal(value: Optional[str]) -> bool:
+    if not value:
+        return False
+
+    # Try converting value to an integer using base 16:
+    try:
+        int(value, 16)
+        return True
+    except ValueError:
+        return False
 
 
 # **************************************************************************************
