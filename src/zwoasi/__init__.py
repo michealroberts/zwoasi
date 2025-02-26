@@ -22,6 +22,7 @@ from .gps import ZWOASI_GPS_DATA_CTYPE, ZWOASIGPSData
 from .info import ZWOASI_CAMERA_INFORMATION_CTYPE, ZWOASICameraInformation
 from .mode import ZWOASI_CAMERA_SUPPORTED_MODE_CTYPE, ZWOASICameraSupportedMode
 from .time import ZWOASI_CAMERA_DATE_TIME_CTYPE, ZWOASIDateTime
+from .utils import get_asi_libary_path
 
 # **************************************************************************************
 
@@ -31,10 +32,17 @@ __version__ = "0.0.0"
 
 __license__ = "MIT"
 
+# **************************************************************************************
+
+ZWOASI_SDK_VERSION: str = "1.37"
 
 # **************************************************************************************
 
 __all__: list[str] = [
+    "__version__",
+    "__license__",
+    "get_asi_libary_path",
+    "ZWOASI_SDK_VERSION",
     "ZWOASI_CAMERA_CAPABILITIES_CTYPE",
     "ZWOASI_CAMERA_DATE_TIME_CTYPE",
     "ZWOASI_CAMERA_INFORMATION_CTYPE",
