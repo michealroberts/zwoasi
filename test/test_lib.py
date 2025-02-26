@@ -7,7 +7,7 @@
 
 import unittest
 
-from zwoasi.camera import ZWOASICameraLib
+from zwoasi.lib import ZWOASICameraLib
 
 # **************************************************************************************
 
