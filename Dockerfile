@@ -34,6 +34,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     clang \             
     git \
     libc-dev \
+    libusb-1.0-0 \
     make \
     openssh-client \
     python3-setuptools \
