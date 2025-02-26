@@ -23,6 +23,7 @@ from .info import ZWOASI_CAMERA_INFORMATION_CTYPE, ZWOASICameraInformation
 from .mode import ZWOASI_CAMERA_SUPPORTED_MODE_CTYPE, ZWOASICameraSupportedMode
 from .time import ZWOASI_CAMERA_DATE_TIME_CTYPE, ZWOASIDateTime
 from .utils import get_asi_libary_path
+from .version import ZWOASI_SDK_VERSION
 
 # **************************************************************************************
 
@@ -31,10 +32,6 @@ __version__ = "0.0.0"
 # **************************************************************************************
 
 __license__ = "MIT"
-
-# **************************************************************************************
-
-ZWOASI_SDK_VERSION: str = "1.37"
 
 # **************************************************************************************
 
