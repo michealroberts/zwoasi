@@ -17,8 +17,8 @@ requires-python = ">=3.13"
 dependencies = ["pydantic>=2.10.6"]
 
 [project.urls]
-"Source" = "https://github.com/michealroberts/zwoasi"
-"Issues" = "https://github.com/michealroberts/zwoasi/issues"
+repository = "https://github.com/michealroberts/zwoasi"
+issues = "https://github.com/michealroberts/zwoasi/issues"
 
 [project.scripts]
 zwoasi = "zwoasi:main"
@@ -44,11 +44,16 @@ asyncio_default_fixture_loop_scope = ["session"]
 [tool.mypy]
 plugins = ["pydantic.mypy"]
 
-[tool.hatch]
-packages = [{ include = "zwoasi", root = "src" }]
-
 [tool.hatch.build.targets.wheel]
-include = ["sdk/**/*"]
+packages = ["src/zwoasi"]
+exclude = ["/.devcontainer", "/.github", "/.vscode", "/docs"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"sdk" = "sdk"
 
 [tool.hatch.build.targets.sdist]
-include = ["sdk/**/*"]
+packages = ["src/zwoasi"]
+exclude = ["/.devcontainer", "/.github", "/.vscode", "/docs"]
+
+[tool.hatch.build.targets.sdist.force-include]
+"sdk" = "sdk"
