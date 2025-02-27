@@ -310,6 +310,15 @@ class ZWOASICameraLib:
         ]
         self.lib.ASIGPSGetData.restype = c_int
 
+        # ASIGetDataAfterExpGPS:
+        self.lib.ASIGetDataAfterExpGPS.argtypes = [
+            c_int,
+            POINTER(c_char),
+            c_long,
+            POINTER(ZWOASI_GPS_DATA_CTYPE),
+        ]
+        self.lib.ASIGetDataAfterExpGPS.restype = c_int
+
         # ASIGetVideoDataGPS:
         self.lib.ASIGetVideoDataGPS.argtypes = [
             c_int,
