@@ -1,2 +1,3 @@
 # zwoasi
-Modern python bindings for ZWO ASI astronomical cameras
+
+Modern, type-safe, zero-dependency Python library for controlling ZWO ASI astronomical cameras.
