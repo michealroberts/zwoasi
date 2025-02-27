@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Optional, Tuple
 
 from .capabilities import ZWOASI_CAMERA_CAPABILITIES_CTYPE
+from .gps import ZWOASI_GPS_DATA_CTYPE
 from .info import ZWOASI_CAMERA_INFORMATION_CTYPE
 from .mode import ZWOASI_CAMERA_SUPPORTED_MODE_CTYPE
 from .utils import get_asi_libary_path
@@ -282,6 +283,42 @@ class ZWOASICameraLib:
             c_long,
         ]
         self.lib.ASISetTriggerOutputIOConf.restype = c_int
+
+        # ASIGetID:
+        self.lib.ASIGetID.argtypes = [
+            c_int,
+            POINTER(c_char * 16),
+        ]
+        self.lib.ASIGetID.restype = c_int
+
+        # ASIGetSDKVersion:
+        self.lib.ASIGetSDKVersion.argtypes = []
+        self.lib.ASIGetSDKVersion.restype = POINTER(c_char)
+
+        # ASIGetSerialNumber:
+        self.lib.ASIGetSerialNumber.argtypes = [
+            c_int,
+            POINTER(c_char * 8),
+        ]
+        self.lib.ASIGetSerialNumber.restype = c_int
+
+        # ASIGPSGetData:
+        self.lib.ASIGPSGetData.argtypes = [
+            c_int,
+            POINTER(ZWOASI_GPS_DATA_CTYPE),
+            POINTER(ZWOASI_GPS_DATA_CTYPE),
+        ]
+        self.lib.ASIGPSGetData.restype = c_int
+
+        # ASIGetVideoDataGPS:
+        self.lib.ASIGetVideoDataGPS.argtypes = [
+            c_int,
+            POINTER(c_char),
+            c_long,
+            c_int,
+            POINTER(ZWOASI_GPS_DATA_CTYPE),
+        ]
+        self.lib.ASIGetVideoDataGPS.restype = c_int
 
 
 # **************************************************************************************
