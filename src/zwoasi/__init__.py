@@ -10,6 +10,7 @@ from .camera import (
     ZWOASICamera,
     ZWOASICameraParams,
     ZWOASIGPSExposureData,
+    get_all_connected_camera_ids,
 )
 from .capabilities import ZWOASI_CAMERA_CAPABILITIES_CTYPE, ZWOASICameraCapabilities
 from .enums import (
@@ -44,6 +45,7 @@ __license__ = "MIT"
 __all__: list[str] = [
     "__version__",
     "__license__",
+    "get_all_connected_camera_ids",
     "get_asi_libary_path",
     "BaseDeviceState",
     "ZWOASI_SDK_VERSION",
