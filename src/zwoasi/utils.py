@@ -70,15 +70,23 @@ def get_asi_libary_path(version: str) -> Path:
         "arm64": "armv8",
     }
 
+    # Are we running on an ARM Mac?
+    is_arm_mac: bool = sys.lower() == "darwin" and architecture.startswith("arm")
+
+    # Unfortunately, the ZWO ASI SDK does not support ARM Macs (yet):
+    if is_arm_mac:
+        raise NotImplementedError("ARM Macs are not yet supported by the underlying ZWO ASI SDK.")
+    
+    # Are we running on an older Intel Mac?
+    is_darwin_mac: bool = sys.lower() == "darwin" and not is_arm_mac
+
     # If we are on MacOS (e.g., darwin) then we can can look for mac:
     arch: str = (
-        "mac"
-        if sys.lower() == "darwin"
-        else ARCHITECTURE_MAP.get(architecture, architecture)
+        "mac" if is_darwin_mac else ARCHITECTURE_MAP.get(architecture, architecture)
     )
 
     # Direct to the dylib if the system is MacOS (e.g., darwin), otherwise default to .so:
-    filename = "libASICamera2.dylib" if sys.lower() == "darwin" else "libASICamera2.so"
+    filename = "libASICamera2.dylib" if is_darwin_mac else "libASICamera2.so"
 
     # Build the SDK library path using pathlib's '/' operator:
     sdk_path: Path = (
