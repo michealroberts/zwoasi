@@ -5,6 +5,12 @@
 
 # **************************************************************************************
 
+from .camera import (
+    BaseDeviceState,
+    ZWOASICamera,
+    ZWOASICameraParams,
+    ZWOASIGPSExposureData,
+)
 from .capabilities import ZWOASI_CAMERA_CAPABILITIES_CTYPE, ZWOASICameraCapabilities
 from .enums import (
     ZWOASIBayerPattern,
@@ -39,6 +45,7 @@ __all__: list[str] = [
     "__version__",
     "__license__",
     "get_asi_libary_path",
+    "BaseDeviceState",
     "ZWOASI_SDK_VERSION",
     "ZWOASI_CAMERA_CAPABILITIES_CTYPE",
     "ZWOASI_CAMERA_DATE_TIME_CTYPE",
@@ -47,6 +54,8 @@ __all__: list[str] = [
     "ZWOASI_GPS_DATA_CTYPE",
     "ZWOASIBayerPattern",
     "ZWOASIBool",
+    "ZWOASICamera",
+    "ZWOASICameraParams",
     "ZWOASICameraCapabilities",
     "ZWOASICameraMode",
     "ZWOASICameraInformation",
@@ -59,6 +68,7 @@ __all__: list[str] = [
     "ZWOASIExposureStatus",
     "ZWOASIFlipStatus",
     "ZWOASIGPSData",
+    "ZWOASIGPSExposureData",
     "ZWOASIGuideDirection",
     "ZWOASIIOError",
     "ZWOASIImageType",

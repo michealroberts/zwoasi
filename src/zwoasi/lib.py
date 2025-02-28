@@ -329,5 +329,4 @@ class ZWOASICameraLib:
         ]
         self.lib.ASIGetVideoDataGPS.restype = c_int
 
-
 # **************************************************************************************
