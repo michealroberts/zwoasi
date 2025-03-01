@@ -66,6 +66,24 @@ class ZWOASIGPSExposureData(TypedDict):
 
 # **************************************************************************************
 
+
+def get_all_connected_camera_ids() -> List[int]:
+    # Instantiate the ZWO library wrapper for the ASICamera SDK:
+    sdk = ZWOASICameraLib(version=ZWOASI_SDK_VERSION)
+
+    # If the SDK library failed to load, raise an error:
+    if sdk.lib is None:
+        raise RuntimeError("Failed to load the ZWO ASICamera SDK library.")
+
+    # Attempt to get the number of connected cameras:
+    number_of_cameras: int = sdk.lib.ASIGetNumOfConnectedCameras()
+
+    # Return a list of camera indices from 0 to the number of connected cameras:
+    return list(range(number_of_cameras))
+
+
+# **************************************************************************************
+
 ZWOASI_VENDOR_ID: str = "03c3"
 
 # **************************************************************************************

@@ -7,14 +7,28 @@
 
 from time import sleep
 
-from zwoasi import ZWOASICamera, ZWOASICameraParams, ZWOASIImageType
+from zwoasi import (
+    ZWOASICamera,
+    ZWOASICameraParams,
+    ZWOASIImageType,
+    get_all_connected_camera_ids,
+)
 
 # **************************************************************************************
 
 
 def main() -> None:
+    # Get all connected camera IDs:
+    ids = get_all_connected_camera_ids()
+
+    print(f"Connected Camera IDs: {ids}")
+
     # Let's assume the camera ID is 0 (e.g., only 1 camera is connected):
     id = 0
+
+    if id not in ids:
+        print(f"Camera ID {id} not found in connected camera IDs: {ids}")
+        return
 
     # Create a new camera parameters instance (for demonstration purposes we are
     # connecting to a ASI62000M Pro model) which has a pid of "" (empty string):
