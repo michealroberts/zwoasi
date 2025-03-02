@@ -23,6 +23,7 @@ from .enums import (
     ZWOASIFlipStatus,
     ZWOASIGuideDirection,
     ZWOASIImageType,
+    ZWOASITriggerOutput,
 )
 from .errors import ZWOASIError, ZWOASIExposureError, ZWOASIIOError
 from .gps import ZWOASI_GPS_DATA_CTYPE, ZWOASIGPSData
@@ -74,6 +75,7 @@ __all__: list[str] = [
     "ZWOASIGuideDirection",
     "ZWOASIIOError",
     "ZWOASIImageType",
+    "ZWOASITriggerOutput",
 ]
 
 # **************************************************************************************
