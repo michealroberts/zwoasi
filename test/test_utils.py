@@ -1,6 +1,6 @@
 # **************************************************************************************
 
-# @package        zwoasi
+# @package        zwo
 # @license        MIT License Copyright (c) 2025 Michael J. Roberts
 
 # **************************************************************************************
@@ -8,7 +8,7 @@
 import unittest
 from pathlib import Path
 
-from zwoasi.utils import get_asi_libary_path, is_hexadecimal
+from zwo.utils import get_asi_libary_path, is_hexadecimal
 
 # **************************************************************************************
 
