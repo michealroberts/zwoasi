@@ -126,7 +126,7 @@ We have also provided further usage examples in the [examples](./examples) direc
 - [X] Fully supported ZWO ASI Camera operations
 - [ ] Fully supported ZWO Electronic Automatic Focuser operations
 - [ ] Fully supported ZWO Filter Wheel operations
-- [ ] Fully seasoned recipes for usage with numpy, astropy et al.
+- [X] Fully seasoned recipes for usage with numpy, astropy et al.
 - [ ] ASCOM Alpaca APIs w/Fast API
 
 ---
