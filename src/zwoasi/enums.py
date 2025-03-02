@@ -277,3 +277,20 @@ class ZWOASIImageType(IntEnum):
 
 
 # **************************************************************************************
+
+
+class ZWOASITriggerOutput(IntEnum):
+    """
+    Enumeration corresponding to the C enumeration ASI_TRIGGER_OUTPUT:
+
+    ASI_TRIG_OUTPUT_PINA = 0 Only Pin A output
+    ASI_TRIG_OUTPUT_PINB = 1 Only Pin B output
+    ASI_TRIG_OUTPUT_NONE = -1
+    """
+
+    PINA = 0
+    PINB = 1
+    NONE = -1
+
+
+# **************************************************************************************

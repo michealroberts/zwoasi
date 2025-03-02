@@ -17,6 +17,7 @@ from zwoasi import (
     ZWOASIFlipStatus,
     ZWOASIGuideDirection,
     ZWOASIImageType,
+    ZWOASITriggerOutput,
 )
 
 # **************************************************************************************
@@ -554,6 +555,26 @@ class TestASIExposureStatus(unittest.TestCase):
         self.assertIs(ZWOASIExposureStatus(1), ZWOASIExposureStatus.WORKING)
         self.assertIs(ZWOASIExposureStatus(2), ZWOASIExposureStatus.SUCCESS)
         self.assertIs(ZWOASIExposureStatus(3), ZWOASIExposureStatus.FAILED)
+
+
+# **************************************************************************************
+
+
+class TestASITriggerOutput(unittest.TestCase):
+    def test_enum_values(self):
+        self.assertEqual(ZWOASITriggerOutput.PINA, 0)
+        self.assertEqual(ZWOASITriggerOutput.PINB, 1)
+        self.assertEqual(ZWOASITriggerOutput.NONE, -1)
+
+    def test_enum_member_by_name(self):
+        self.assertIs(ZWOASITriggerOutput["PINA"], ZWOASITriggerOutput.PINA)
+        self.assertIs(ZWOASITriggerOutput["PINB"], ZWOASITriggerOutput.PINB)
+        self.assertIs(ZWOASITriggerOutput["NONE"], ZWOASITriggerOutput.NONE)
+
+    def test_enum_member_from_int(self):
+        self.assertIs(ZWOASITriggerOutput(0), ZWOASITriggerOutput.PINA)
+        self.assertIs(ZWOASITriggerOutput(1), ZWOASITriggerOutput.PINB)
+        self.assertIs(ZWOASITriggerOutput(-1), ZWOASITriggerOutput.NONE)
 
 
 # **************************************************************************************
