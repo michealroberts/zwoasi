@@ -32,6 +32,8 @@ To check if you any ZWO ASI cameras connected, run the following command:
 lsusb | grep 03c3
 ```
 
+N.B. The `03c3` is the vendor ID for ZWO.
+
 You should see something like this as your output:
 
 ```bash
@@ -106,7 +108,31 @@ As the zwo instance is fully typed, you can use your IDE's autocompletion to see
 
 We have also provided further usage examples in the [examples](./examples) directory.
 
+### Milestones
+
+- [X] Type-safe modern 3.6+ Python
+- [X] Portable .h, .so and .dylib files for Linux and MacOS
+- [] Portable .dll files for Windows
+- [X] Fully unit tested
+- [X] Simpler API (modelled around the ASCOM Alpaca API)
+- [X] Integration testing with HIL testing (hardware-in-the-loop)
+- [X] Zero-external dependencies (no numpy, astropy etc for portability)
+- [X] Example API usage
+- [X] Fully supported ZWO ASI Camera operations
+- [] Fully supported ZWO Electronic Automatic Focuser operations
+- [] Fully supported ZWO Filter Wheel operations
+- [] Fully seasoned recipes for usage with numpy, astropy et al.
+- [] ASCOM Alpaca APIs w/Fast API
+
 ---
+
+### Miscellaneous
+
+For more information on the ZWO ASI SDK, please visit the [ZWO ASI SDK](https://www.zwoastro.com/software/) website.
+
+### Disclaimer
+
+This project is not affiliated with ZWO ASI in any way. It is a community-driven project. All trademarks and logos are the property of their respective owners. The ZWO ASI SDK is the property of ZWO ASI.
 
 ### License
 
