@@ -59,6 +59,7 @@
   "postStartCommand": "/bin/zsh",
   "runArgs": [
     "--network=host",
+    "--privileged",
     "--env-file",
     "${localWorkspaceFolder}/.devcontainer/.env.config"
   ]
