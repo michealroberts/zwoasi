@@ -50,4 +50,8 @@ jobs:
       - name: Static Analysis w/mypy
         run: |
           uv run mypy ./src/zwo --config mypy.ini
+
+      - name: Build w/Hatch Build Backend 🔧
+        run: |
+          uv build
           
