@@ -112,17 +112,17 @@ We have also provided further usage examples in the [examples](./examples) direc
 
 - [X] Type-safe modern 3.6+ Python
 - [X] Portable .h, .so and .dylib files for Linux and MacOS
-- [] Portable .dll files for Windows
+- [ ] Portable .dll files for Windows
 - [X] Fully unit tested
 - [X] Simpler API (modelled around the ASCOM Alpaca API)
 - [X] Integration testing with HIL testing (hardware-in-the-loop)
 - [X] Zero-external dependencies (no numpy, astropy etc for portability)
 - [X] Example API usage
 - [X] Fully supported ZWO ASI Camera operations
-- [] Fully supported ZWO Electronic Automatic Focuser operations
-- [] Fully supported ZWO Filter Wheel operations
-- [] Fully seasoned recipes for usage with numpy, astropy et al.
-- [] ASCOM Alpaca APIs w/Fast API
+- [ ] Fully supported ZWO Electronic Automatic Focuser operations
+- [ ] Fully supported ZWO Filter Wheel operations
+- [ ] Fully seasoned recipes for usage with numpy, astropy et al.
+- [ ] ASCOM Alpaca APIs w/Fast API
 
 ---
 
