@@ -1,3 +1,8 @@
+![pypi](https://img.shields.io/pypi/v/zwo.svg)
+![versions](https://img.shields.io/pypi/pyversions/zwo.svg)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![zwoasi/test](https://github.com/michealroberts/zwoasi/actions/workflows/test.yml/badge.svg)](https://github.com/michealroberts/zwoasi/actions/workflows/test.yml)
+
 # zwoasi
 
 Modern, type-safe, zero-dependency Python library for controlling ZWO ASI astronomical cameras.
@@ -108,7 +113,7 @@ As the zwo instance is fully typed, you can use your IDE's autocompletion to see
 
 We have also provided further usage examples in the [examples](./examples) directory.
 
-### Milestones
+## Milestones
 
 - [X] Type-safe modern 3.6+ Python
 - [X] Portable .h, .so and .dylib files for Linux and MacOS
