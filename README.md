@@ -41,7 +41,7 @@ Bus 001 Device 016: ID 03c3:620b ZWO ASI6200MM Pro
 To allow non-root users to access the ASI camera, you need to create a udev rule. The following command will copy the rule to the correct location:
 
 ```bash
-sudo install /zwoasi/sdk/137/lib/asi.rules /lib/udev/asi-rules.d
+sudo install /zwo/sdk/137/lib/asi.rules /lib/udev/asi-rules.d
 ```
 
 ```bash
@@ -111,5 +111,3 @@ We have also provided further usage examples in the [examples](./examples) direc
 ### License
 
 This project is licensed under the terms of the MIT license.
-
-Pulse Streamer

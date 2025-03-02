@@ -49,5 +49,5 @@ jobs:
 
       - name: Static Analysis w/mypy
         run: |
-          uv run mypy ./src/zwoasi --config mypy.ini
+          uv run mypy ./src/zwo --config mypy.ini
           

@@ -1,6 +1,6 @@
 # **************************************************************************************
 
-# @package        zwoasi
+# @package        zwo
 # @license        MIT License Copyright (c) 2025 Michael J. Roberts
 
 # **************************************************************************************
@@ -328,5 +328,6 @@ class ZWOASICameraLib:
             POINTER(ZWOASI_GPS_DATA_CTYPE),
         ]
         self.lib.ASIGetVideoDataGPS.restype = c_int
+
 
 # **************************************************************************************

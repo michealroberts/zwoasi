@@ -1,6 +1,6 @@
 # **************************************************************************************
 
-# @package        zwoasi
+# @package        zwo
 # @license        MIT License Copyright (c) 2025 Michael J. Roberts
 
 # **************************************************************************************
@@ -75,8 +75,10 @@ def get_asi_libary_path(version: str) -> Path:
 
     # Unfortunately, the ZWO ASI SDK does not support ARM Macs (yet):
     if is_arm_mac:
-        raise NotImplementedError("ARM Macs are not yet supported by the underlying ZWO ASI SDK.")
-    
+        raise NotImplementedError(
+            "ARM Macs are not yet supported by the underlying ZWO ASI SDK."
+        )
+
     # Are we running on an older Intel Mac?
     is_darwin_mac: bool = sys.lower() == "darwin" and not is_arm_mac
 

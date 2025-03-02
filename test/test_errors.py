@@ -1,6 +1,6 @@
 # **************************************************************************************
 
-# @package        zwoasi
+# @package        zwo
 # @license        MIT License Copyright (c) 2025 Michael J. Roberts
 
 # **************************************************************************************
@@ -8,7 +8,7 @@
 import unittest
 from typing import Optional
 
-from zwoasi import (
+from zwo import (
     ZWOASIError,
     ZWOASIExposureError,
     ZWOASIExposureStatus,

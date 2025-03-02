@@ -1,5 +1,5 @@
 [project]
-name = "zwoasi"
+name = "zwo"
 version = "0.0.0"
 description = "Modern python bindings for ZWO ASI astronomical cameras"
 authors = [{ name = "Michael Roberts", email = "michael@observerly.com" }]
@@ -21,7 +21,7 @@ repository = "https://github.com/michealroberts/zwoasi"
 issues = "https://github.com/michealroberts/zwoasi/issues"
 
 [project.scripts]
-zwoasi = "zwoasi:main"
+zwo = "zwo:main"
 
 [build-system]
 requires = ["hatchling"]
@@ -45,14 +45,14 @@ asyncio_default_fixture_loop_scope = ["session"]
 plugins = ["pydantic.mypy"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/zwoasi"]
+packages = ["src/zwo"]
 exclude = ["/.devcontainer", "/.github", "/.vscode", "/docs"]
 
 [tool.hatch.build.targets.wheel.force-include]
 "sdk" = "sdk"
 
 [tool.hatch.build.targets.sdist]
-packages = ["src/zwoasi"]
+packages = ["src/zwo"]
 exclude = ["/.devcontainer", "/.github", "/.vscode", "/docs"]
 
 [tool.hatch.build.targets.sdist.force-include]

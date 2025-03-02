@@ -1,13 +1,13 @@
 # **************************************************************************************
 
-# @package        zwoasi
+# @package        zwo
 # @license        MIT License Copyright (c) 2025 Michael J. Roberts
 
 # **************************************************************************************
 
 import unittest
 
-from zwoasi import ZWOASI_CAMERA_CAPABILITIES_CTYPE, ZWOASICameraCapabilities
+from zwo import ZWOASI_CAMERA_CAPABILITIES_CTYPE, ZWOASICameraCapabilities
 
 # **************************************************************************************
 

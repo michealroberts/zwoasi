@@ -1,6 +1,6 @@
 # **************************************************************************************
 
-# @package        zwoasi
+# @package        zwo
 # @license        MIT License Copyright (c) 2025 Michael J. Roberts
 
 # **************************************************************************************
@@ -10,7 +10,7 @@ from datetime import datetime
 
 from pydantic import ValidationError
 
-from zwoasi import ZWOASI_CAMERA_DATE_TIME_CTYPE, ZWOASIDateTime
+from zwo import ZWOASI_CAMERA_DATE_TIME_CTYPE, ZWOASIDateTime
 
 # **************************************************************************************
 

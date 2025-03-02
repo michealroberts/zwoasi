@@ -319,7 +319,7 @@ wheels = [
 ]
 
 [[package]]
-name = "zwoasi"
+name = "zwo"
 version = "0.0.0"
 source = { editable = "." }
 dependencies = [
