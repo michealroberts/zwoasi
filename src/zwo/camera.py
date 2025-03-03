@@ -29,6 +29,7 @@ from .enums import (
     ZWOASIExposureStatus,
     ZWOASIGuideDirection,
     ZWOASIImageType,
+    ZWOASITriggerOutput,
 )
 from .errors import ZWOASIExposureError, errors
 from .gps import ZWOASI_GPS_DATA_CTYPE, ZWOASIGPSData
@@ -1846,6 +1847,48 @@ class ZWOASICamera(object):
             bool: True if software-triggered exposures are supported; otherwise, False.
         """
         return self.info.has_external_trigger
+
+    def get_soft_trigger_io_configuration(
+        self, pin: ZWOASITriggerOutput
+    ) -> Tuple[bool, int, int]:
+        """
+        Retrieve the configuration for a software trigger output I/O port.
+
+        Args:
+            pin (ZWOASITriggerOutput): The trigger output pin to configure.
+        """
+        if not self.is_connected():
+            raise RuntimeError("Device is not connected.")
+
+        if not self.has_external_trigger():
+            raise RuntimeError("External trigger is not supported by this camera.")
+
+        # If true, the selected pin will output a high level as a signal when it is
+        # effective. Or it will output a low level as a signal.
+        # N.B. ASI_BOOL (nonzero means high)
+        high = c_int()
+
+        # The delay time of the trigger signal, in microseconds.
+        delay = c_long()
+
+        # The duration of the trigger signal, in microseconds.
+        duration = c_long()
+
+        error: int = self.lib.ASIGetTriggerOutputIOConf(
+            self.id,
+            c_int(pin),
+            byref(high),
+            byref(delay),
+            byref(duration),
+        )
+
+        # If an error occurred, raise an exception:
+        if error != ZWOASIErrorCode.SUCCESS:
+            raise RuntimeError(
+                f"ASIGetTriggerOutputIOConf failed for I/O pin {pin}. Error: {errors[error]}"
+            )
+
+        return bool(high.value), delay.value, duration.value
 
 
 # **************************************************************************************
