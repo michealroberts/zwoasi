@@ -64,6 +64,11 @@ def main() -> None:
 
     print(f"Camera GPS is supported: {is_gps_supported}")
 
+    # Check if your camera has an external trigger:
+    has_external_trigger = zwo.has_external_trigger()
+
+    print(f"Camera External Trigger: {has_external_trigger}")
+
     # Get the camera's capabilities:
     capabilities = zwo.get_capabilities()
 
