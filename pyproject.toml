@@ -1,6 +1,6 @@
 [project]
 name = "zwo"
-version = "0.0.0"
+version = "0.1.0"
 description = "Modern python bindings for ZWO ASI astronomical cameras"
 authors = [{ name = "Michael Roberts", email = "michael@observerly.com" }]
 maintainers = [{ name = "Michael Roberts", email = "michael@observerly.com" }]
