@@ -47,10 +47,24 @@ def main() -> None:
     if not zwo.is_ready():
         return
 
+    zwo.set_soft_trigger_io_configuration(
+        pin=ZWOASITriggerOutput.PINA,
+        high=True,
+        delay=100,
+        duration=1000,
+    )
+
     # Get the camera's triggering I/O configuration for Pin A:
     config = zwo.get_soft_trigger_io_configuration(pin=ZWOASITriggerOutput.PINA)
 
     print(f"Camera Trigger I/O Configuration [Pin A]: {config}")
+
+    zwo.set_soft_trigger_io_configuration(
+        pin=ZWOASITriggerOutput.PINB,
+        high=False,
+        delay=100,
+        duration=1000,
+    )
 
     # Get the camera's triggering I/O configuration for Pin B:
     config = zwo.get_soft_trigger_io_configuration(pin=ZWOASITriggerOutput.PINB)

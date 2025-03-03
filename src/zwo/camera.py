@@ -1890,5 +1890,44 @@ class ZWOASICamera(object):
 
         return bool(high.value), delay.value, duration.value
 
+    def set_soft_trigger_io_configuration(
+        self,
+        pin: ZWOASITriggerOutput,
+        high: bool,
+        delay: int,
+        duration: int,
+    ) -> None:
+        """
+        Set the configuration for a software trigger output I/O port.
+
+        Args:
+            pin (ZWOASITriggerOutput): The trigger output pin to configure.
+            high (bool): True to output a high signal, False to output a low signal.
+            delay (int): The delay time of the trigger signal, in microseconds.
+            duration (int): The duration of the trigger signal, in microseconds.
+        """
+        if not self.is_connected():
+            raise RuntimeError("Device is not connected.")
+
+        if not self.has_external_trigger():
+            raise RuntimeError("External trigger is not supported by this camera.")
+
+        # Convert pin output to either high (1) or low (0) based on the boolean value:
+        output = 1 if high else 0
+
+        error: int = self.lib.ASISetTriggerOutputIOConf(
+            self.id,
+            c_int(pin),
+            c_int(output),
+            c_long(delay),
+            c_long(duration),
+        )
+
+        # If an error occurred, raise an exception:
+        if error != ZWOASIErrorCode.SUCCESS:
+            raise RuntimeError(
+                f"ASISetTriggerOutputIOConf failed for I/O pin {pin}. Error: {errors[error]}"
+            )
+
 
 # **************************************************************************************
