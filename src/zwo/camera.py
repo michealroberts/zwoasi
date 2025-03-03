@@ -1838,5 +1838,14 @@ class ZWOASICamera(object):
 
         return frame, gps_data
 
+    def has_external_trigger(self) -> bool:
+        """
+        Check if the camera supports software-triggered exposures.
+
+        Returns:
+            bool: True if software-triggered exposures are supported; otherwise, False.
+        """
+        return self.info.has_external_trigger
+
 
 # **************************************************************************************
