@@ -5,6 +5,8 @@
 
 # **************************************************************************************
 
+from time import sleep
+
 from zwo import (
     ZWOASICamera,
     ZWOASICameraParams,
@@ -56,6 +58,15 @@ def main() -> None:
 
     # Get the camera's triggering I/O configuration for Pin A:
     config = zwo.get_soft_trigger_io_configuration(pin=ZWOASITriggerOutput.PINA)
+
+    # Send a software start trigger to the camera:
+    zwo.send_soft_trigger(start=True)
+
+    # Wait for 2 seconds:
+    sleep(2)
+
+    # Send a software stop trigger to the camera:
+    zwo.send_soft_trigger(start=False)
 
     print(f"Camera Trigger I/O Configuration [Pin A]: {config}")
 
