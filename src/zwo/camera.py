@@ -1929,5 +1929,29 @@ class ZWOASICamera(object):
                 f"ASISetTriggerOutputIOConf failed for I/O pin {pin}. Error: {errors[error]}"
             )
 
+    def send_soft_trigger(self, start: bool) -> None:
+        """
+        Send a software trigger to the camera
+
+        Args:
+            start (bool): True to start the trigger, False to stop it.
+        """
+        if not self.is_connected():
+            raise RuntimeError("Device is not connected.")
+
+        if not self.has_external_trigger():
+            raise RuntimeError("External trigger is not supported by this camera.")
+
+        # Either send a soft trigger start (1) or stop (0) signal:
+        starts: int = 1 if start else 0
+
+        error: int = self.lib.ASISendSoftTrigger(self.id, c_int(starts))
+
+        # If an error occurred, raise an exception:
+        if error != ZWOASIErrorCode.SUCCESS:
+            raise RuntimeError(
+                f"ASISendSoftTrigger failed for camera {self.id}. Error: {errors[error]}"
+            )
+
 
 # **************************************************************************************
