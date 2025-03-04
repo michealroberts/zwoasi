@@ -65,6 +65,10 @@ class ZWOASICameraLib:
         self.lib.ASIGetNumOfConnectedCameras.argtypes = []
         self.lib.ASIGetNumOfConnectedCameras.restype = c_int
 
+        # ASICheckCamera:
+        self.lib.ASICameraCheck.argtypes = [c_int, c_int]
+        self.lib.ASICameraCheck.restype = c_int
+
         # ASIGetCameraProperty:
         self.lib.ASIGetCameraProperty.argtypes = [
             POINTER(ZWOASI_CAMERA_INFORMATION_CTYPE),
