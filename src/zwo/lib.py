@@ -5,7 +5,8 @@
 
 # **************************************************************************************
 
-from ctypes import CDLL, POINTER, c_char, c_int, c_long, cdll
+from ctypes import CDLL, POINTER, c_char, c_int, c_long, c_ubyte, cdll
+from ctypes import Structure as c_Structure
 from ctypes.util import find_library
 from pathlib import Path
 from typing import Optional, Tuple
@@ -15,6 +16,15 @@ from .gps import ZWOASI_GPS_DATA_CTYPE
 from .info import ZWOASI_CAMERA_INFORMATION_CTYPE
 from .mode import ZWOASI_CAMERA_SUPPORTED_MODE_CTYPE
 from .utils import get_asi_libary_path
+
+# **************************************************************************************
+
+
+class ASI_ID_CTYPE(c_Structure):
+    _fields_ = [
+        ("id", c_ubyte * 8),
+    ]
+
 
 # **************************************************************************************
 
@@ -87,6 +97,10 @@ class ZWOASICameraLib:
         # ASICloseCamera:
         self.lib.ASICloseCamera.argtypes = [c_int]
         self.lib.ASICloseCamera.restype = c_int
+
+        # ASIGetID:
+        self.lib.ASIGetID.argtypes = [c_int, POINTER(ASI_ID_CTYPE)]
+        self.lib.ASIGetID.restype = c_int
 
         # ASIGetNumOfControls:
         self.lib.ASIGetNumOfControls.argtypes = [
