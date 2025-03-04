@@ -24,6 +24,7 @@ from typing import List, Optional, Tuple, TypedDict
 
 from .capabilities import ZWOASI_CAMERA_CAPABILITIES_CTYPE, ZWOASICameraCapabilities
 from .enums import (
+    ZWOASIBool,
     ZWOASIControlType,
     ZWOASIErrorCode,
     ZWOASIExposureStatus,
@@ -81,6 +82,25 @@ def get_all_connected_camera_ids() -> List[int]:
 
     # Return a list of camera indices from 0 to the number of connected cameras:
     return list(range(number_of_cameras))
+
+
+# **************************************************************************************
+
+
+def is_connected(vid: str, pid: str) -> bool:
+    # Instantiate the ZWO library wrapper for the ASICamera SDK:
+    sdk = ZWOASICameraLib(version=ZWOASI_SDK_VERSION)
+
+    # If the SDK library failed to load, raise an error:
+    if sdk.lib is None:
+        raise RuntimeError("Failed to load the ZWO ASICamera SDK library.")
+
+    # Convert the vendor and product IDs to integers from hexadecimal strings and
+    # check the camera for the given vendor and product IDs:
+    is_connected: int = sdk.lib.ASICameraCheck(int(vid, 16), int(pid, 16))
+
+    # Return True if the camera is connected, otherwise False:
+    return is_connected == ZWOASIBool.TRUE
 
 
 # **************************************************************************************
