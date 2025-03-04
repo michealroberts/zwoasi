@@ -88,6 +88,10 @@ class ZWOASICameraLib:
         self.lib.ASICloseCamera.argtypes = [c_int]
         self.lib.ASICloseCamera.restype = c_int
 
+        # ASIGetID:
+        self.lib.ASIGetID.argtypes = [c_int, POINTER(c_char)]
+        self.lib.ASIGetID.restype = c_int
+
         # ASIGetNumOfControls:
         self.lib.ASIGetNumOfControls.argtypes = [
             c_int,
