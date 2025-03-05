@@ -19,6 +19,7 @@ from ctypes import (
 )
 from enum import Enum
 from pathlib import Path
+from sys import byteorder
 from time import sleep
 from typing import List, Optional, Tuple, TypedDict
 
@@ -394,7 +395,19 @@ class ZWOASICamera(object):
         Returns:
             int: The device ID.
         """
-        return self.info.id
+        id = create_string_buffer(16)
+
+        # Call the ASIGetID function to get the ID for the camera:
+        error: int = self.lib.ASIGetID(c_int(self.id), id)
+
+        # If an error occurred, raise an exception:
+        if error != ZWOASIErrorCode.SUCCESS:
+            raise RuntimeError(
+                f"Error getting ID for index {self.id}. Error: {errors[error]}"
+            )
+
+        # Return the value of the id_struct as an integer:
+        return int.from_bytes(id.raw[:8], byteorder=byteorder)
 
     def get_name(self) -> str:
         """
