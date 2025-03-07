@@ -86,7 +86,7 @@ Unfortunately, ZWO ASI does not directly support .dll files for Windows. However
 ## Usage
 
 ```python
-from zwo import import ZWOASICamera, ZWOASICameraParams
+from zwo import ZWOASICamera, ZWOASICameraParams
 
 # Let's assume the camera ID is 0 (e.g., only 1 camera is connected):
 id = 0
