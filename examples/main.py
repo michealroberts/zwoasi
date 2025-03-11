@@ -215,7 +215,7 @@ def main() -> None:
 
     difference = end - start
 
-    print(f"Camera Exposure Duration: ~ {difference / 1e9}s")
+    print(f"Camera Exposure Duration: ~ {difference}ns")
 
     print(f"Camera Frame Size: {len(frame)}")
 
