@@ -1358,24 +1358,17 @@ class ZWOASICamera(object):
         # Start the exposure and wait for it to complete:
         error: int = self.lib.ASIStartExposure(self.id, is_dark)
 
-        # Get the time after the exposure completes, in nanoseconds:
-        # after = time_ns()
-
-        # Calculate an approximate start time of the exposure:
-        at_ns = time_ns()
-
         # If an error occurred, raise an exception:
         if error != ZWOASIErrorCode.SUCCESS:
             raise RuntimeError(
                 f"Error starting exposure for index {self.id}. Error: {errors[error]}"
             )
 
-        # Get the frame buffer and size:
-        buffer, size = self._get_frame_buffer()
+        # Get the time after the exposure completes, in nanoseconds:
+        # after = time_ns()
 
-        c_buffer_reference = c_char * size
-
-        c_buffer = c_buffer_reference.from_buffer(buffer)
+        # Calculate an approximate start time of the exposure:
+        at_ns = time_ns()
 
         # What is the end time of the exposure (in nanoseconds)?
         end_ns = -1
@@ -1397,6 +1390,13 @@ class ZWOASICamera(object):
                     f"Error acquiring frame for index {self.id}. Error: Exposure failed.",
                     status_code=ZWOASIExposureStatus.FAILED,
                 )
+
+        # Get the frame buffer and size:
+        buffer, size = self._get_frame_buffer()
+
+        c_buffer_reference = c_char * size
+
+        c_buffer = c_buffer_reference.from_buffer(buffer)
 
         # Get the bytes data from the camera one we have a successful exposure:
         error = self.lib.ASIGetDataAfterExp(self.id, c_buffer, size)
