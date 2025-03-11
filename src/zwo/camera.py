@@ -1364,6 +1364,8 @@ class ZWOASICamera(object):
                 f"Error starting exposure for index {self.id}. Error: {errors[error]}"
             )
 
+        sleep(0.8)
+
         # Calculate an approximate start time of the exposure:
         at_ns = time_ns()
 
