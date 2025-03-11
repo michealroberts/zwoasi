@@ -20,7 +20,7 @@ from ctypes import (
 from enum import Enum
 from pathlib import Path
 from sys import byteorder
-from time import time_ns
+from time import perf_counter
 from typing import List, Optional, Tuple, TypedDict
 
 from .capabilities import ZWOASI_CAMERA_CAPABILITIES_CTYPE, ZWOASICameraCapabilities
@@ -1368,14 +1368,14 @@ class ZWOASICamera(object):
             )
 
         # Calculate an approximate start time of the exposure:
-        at_ns = time_ns()
+        at_ns = perf_counter()
 
         # Get the time after the exposure completes, in nanoseconds:
         # after = time_ns()
 
         # Wait for the exposure to complete:
         while True:
-            end_ns = time_ns()
+            end_ns = perf_counter()
 
             # Get the exposure status from the camera:
             status = self.get_acquisition_status()
