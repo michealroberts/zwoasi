@@ -1378,8 +1378,6 @@ class ZWOASICamera(object):
             # Get the exposure status from the camera:
             status = self.get_acquisition_status()
 
-            print(status)
-
             # If the exposure is complete, break out of the loop:
             if status == ZWOASIExposureStatus.SUCCESS:
                 break
