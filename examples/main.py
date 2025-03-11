@@ -174,7 +174,7 @@ def main() -> None:
     print(f"Camera Max Exposure Time: {max_exposure_time}")
 
     # Set the exposure time to the minimum supported value:
-    zwo.set_exposure_time(min_exposure_time)
+    zwo.set_exposure_time(2)
 
     # Get the current exposure time:
     exposure_time = zwo.get_exposure_time()
