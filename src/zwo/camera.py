@@ -1364,16 +1364,27 @@ class ZWOASICamera(object):
                 f"Error starting exposure for index {self.id}. Error: {errors[error]}"
             )
 
-        sleep(0.8)
+        while True:
+            # Calculate an approximate start time of the exposure:
+            at_ns = time_ns()
 
-        # Calculate an approximate start time of the exposure:
-        at_ns = time_ns()
+            # Get the exposure status from the camera:
+            status = self.get_acquisition_status()
 
-        end_perf = perf_counter()
+            # If the exposure is working, break out of the loop:
+            if status == ZWOASIExposureStatus.WORKING:
+                break
+
+            # If the exposure failed, raise an exception:
+            if status == ZWOASIExposureStatus.FAILED:
+                raise ZWOASIExposureError(
+                    f"Error acquiring frame for index {self.id}. Error: Exposure failed.",
+                    status_code=ZWOASIExposureStatus.FAILED,
+                )
 
         # Wait for the exposure to complete:
         while True:
-            end_ns = at_ns + int((perf_counter() - end_perf) * 1_000_000_000)
+            end_ns = time_ns()
 
             # Get the exposure status from the camera:
             status = self.get_acquisition_status()
