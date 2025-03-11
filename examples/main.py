@@ -5,6 +5,7 @@
 
 # **************************************************************************************
 
+from datetime import datetime, timezone
 from time import sleep
 
 from zwo import (
@@ -199,12 +200,18 @@ def main() -> None:
 
     print(f"Camera Temperature: {temperature}°C")
 
-    # Get the frame from the camera:
+    # Get the frame from the camera, as well as the approximate start and end times of the
+    # exposure (in nanoseconds):
     frame, start, end = zwo.get_frame()
 
-    print(f"Camera Exposure Started At: {start}")
+    # Convert nanoseconds to seconds and create a datetime object (UTC in this example):
+    when = datetime.fromtimestamp(start / 1e9, tz=timezone.utc)
 
-    print(f"Camera Exposure Ended At: {end}")
+    print(f"Camera Exposure Started At: ~ {when}")
+
+    until = datetime.fromtimestamp(end / 1e9, tz=timezone.utc)
+
+    print(f"Camera Exposure Ended At: ~ {until}")
 
     print(f"Camera Frame Size: {len(frame)}")
 
