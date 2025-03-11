@@ -1352,9 +1352,6 @@ class ZWOASICamera(object):
         if not self.is_ready():
             raise RuntimeError("Device is not ready to capture frames.")
 
-        # What is the end time of the exposure (in nanoseconds)?
-        end_ns = -1
-
         # Start the exposure and wait for it to complete:
         error: int = self.lib.ASIStartExposure(self.id, is_dark)
 
@@ -1364,39 +1361,24 @@ class ZWOASICamera(object):
                 f"Error starting exposure for index {self.id}. Error: {errors[error]}"
             )
 
-        while True:
-            # Calculate an approximate start time of the exposure:
-            at_ns = time_ns()
-
-            # Get the exposure status from the camera:
-            status = self.get_acquisition_status()
-
-            # If the exposure is working, break out of the loop:
-            if status == ZWOASIExposureStatus.WORKING:
-                break
-
-            # If the exposure failed, raise an exception:
-            if status == ZWOASIExposureStatus.FAILED:
-                raise ZWOASIExposureError(
-                    f"Error acquiring frame for index {self.id}. Error: Exposure failed.",
-                    status_code=ZWOASIExposureStatus.FAILED,
-                )
-
         # Wait for the exposure to complete:
         while True:
-            end_ns = time_ns()
-
             # Get the exposure status from the camera:
             status = self.get_acquisition_status()
 
-            # If the exposure is complete, break out of the loop:
-            if status == ZWOASIExposureStatus.SUCCESS:
+            if status == ZWOASIExposureStatus.WORKING:
+                at_ns = time_ns()
+                continue
+
+            # If the exposure is complete, record the end time and break out of the loop:
+            elif status == ZWOASIExposureStatus.SUCCESS:
+                end_ns = time_ns()
                 break
 
             # If the exposure failed, raise an exception:
-            if status == ZWOASIExposureStatus.FAILED:
+            elif status == ZWOASIExposureStatus.FAILED:
                 raise ZWOASIExposureError(
-                    f"Error acquiring frame for index {self.id}. Error: Exposure failed.",
+                    f"Error acquiring frame for index {self.id}. Exposure failed.",
                     status_code=ZWOASIExposureStatus.FAILED,
                 )
 
