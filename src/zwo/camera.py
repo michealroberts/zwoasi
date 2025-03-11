@@ -1355,6 +1355,12 @@ class ZWOASICamera(object):
         # Get the time before the exposure starts, in nanoseconds:
         # before = time_ns()
 
+        # What is the end time of the exposure (in nanoseconds)?
+        end_ns = -1
+
+        # Calculate an approximate start time of the exposure:
+        at_ns = time_ns()
+
         # Start the exposure and wait for it to complete:
         error: int = self.lib.ASIStartExposure(self.id, is_dark)
 
@@ -1366,12 +1372,6 @@ class ZWOASICamera(object):
 
         # Get the time after the exposure completes, in nanoseconds:
         # after = time_ns()
-
-        # Calculate an approximate start time of the exposure:
-        at_ns = time_ns()
-
-        # What is the end time of the exposure (in nanoseconds)?
-        end_ns = -1
 
         # Wait for the exposure to complete:
         while True:
