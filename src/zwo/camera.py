@@ -1361,13 +1361,15 @@ class ZWOASICamera(object):
                 f"Error starting exposure for index {self.id}. Error: {errors[error]}"
             )
 
+        at_ns = time_ns()
+
         # Wait for the exposure to complete:
         while True:
             # Get the exposure status from the camera:
             status = self.get_acquisition_status()
 
             if status == ZWOASIExposureStatus.WORKING:
-                at_ns = time_ns()
+                # at_ns = time_ns()
                 continue
 
             # If the exposure is complete, record the end time and break out of the loop:
