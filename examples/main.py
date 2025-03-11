@@ -213,6 +213,10 @@ def main() -> None:
 
     print(f"Camera Exposure Ended At: ~ {until}")
 
+    difference = end - start
+
+    print(f"Camera Exposure Duration: ~ {difference / 1e9}s")
+
     print(f"Camera Frame Size: {len(frame)}")
 
     # Turn off the camera's cooler:
