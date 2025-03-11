@@ -20,7 +20,7 @@ from ctypes import (
 from enum import Enum
 from pathlib import Path
 from sys import byteorder
-from time import perf_counter, time_ns
+from time import perf_counter, sleep, time_ns
 from typing import List, Optional, Tuple, TypedDict
 
 from .capabilities import ZWOASI_CAMERA_CAPABILITIES_CTYPE, ZWOASICameraCapabilities
@@ -1352,14 +1352,8 @@ class ZWOASICamera(object):
         if not self.is_ready():
             raise RuntimeError("Device is not ready to capture frames.")
 
-        # Get the time before the exposure starts, in nanoseconds:
-        # before = time_ns()
-
         # What is the end time of the exposure (in nanoseconds)?
         end_ns = -1
-
-        # Calculate an approximate start time of the exposure:
-        at_ns = time_ns()
 
         # Start the exposure and wait for it to complete:
         error: int = self.lib.ASIStartExposure(self.id, is_dark)
@@ -1370,8 +1364,8 @@ class ZWOASICamera(object):
                 f"Error starting exposure for index {self.id}. Error: {errors[error]}"
             )
 
-        # Get the time after the exposure completes, in nanoseconds:
-        # after = time_ns()
+        # Calculate an approximate start time of the exposure:
+        at_ns = time_ns()
 
         end_perf = perf_counter()
 
@@ -1381,6 +1375,8 @@ class ZWOASICamera(object):
 
             # Get the exposure status from the camera:
             status = self.get_acquisition_status()
+
+            print(status)
 
             # If the exposure is complete, break out of the loop:
             if status == ZWOASIExposureStatus.SUCCESS:
