@@ -20,7 +20,7 @@ from ctypes import (
 from enum import Enum
 from pathlib import Path
 from sys import byteorder
-from time import sleep
+from time import time_ns
 from typing import List, Optional, Tuple, TypedDict
 
 from .capabilities import ZWOASI_CAMERA_CAPABILITIES_CTYPE, ZWOASICameraCapabilities
@@ -1327,7 +1327,7 @@ class ZWOASICamera(object):
         # Return the pixel data as a list of integers:
         return data.tolist()
 
-    def _get_frame(self, is_dark: bool = False) -> List[int]:
+    def _get_frame(self, is_dark: bool = False) -> Tuple[List[int], int, int]:
         """
         Capture a single full-frame exposure using the current ROI and exposure settings.
 
@@ -1349,10 +1349,20 @@ class ZWOASICamera(object):
         if not self.is_connected():
             raise RuntimeError("Device is not connected.")
 
-        exposure_time = self.get_exposure_time()
+        if not self.is_ready():
+            raise RuntimeError("Device is not ready to capture frames.")
+
+        # Get the time before the exposure starts, in nanoseconds:
+        before = time_ns()
 
         # Start the exposure and wait for it to complete:
         error: int = self.lib.ASIStartExposure(self.id, is_dark)
+
+        # Get the time after the exposure completes, in nanoseconds:
+        after = time_ns()
+
+        # Calculate an approximate start time of the exposure:
+        at_ns = int(round((before + after) / 2))
 
         # If an error occurred, raise an exception:
         if error != ZWOASIErrorCode.SUCCESS:
@@ -1367,6 +1377,9 @@ class ZWOASICamera(object):
 
         c_buffer = c_buffer_reference.from_buffer(buffer)
 
+        # What is the end time of the exposure (in nanoseconds)?
+        end_ns = -1
+
         # Wait for the exposure to complete:
         while True:
             # Get the exposure status from the camera:
@@ -1374,6 +1387,7 @@ class ZWOASICamera(object):
 
             # If the exposure is complete, break out of the loop:
             if status == ZWOASIExposureStatus.SUCCESS:
+                end_ns = time_ns()
                 break
 
             # If the exposure failed, raise an exception:
@@ -1382,19 +1396,6 @@ class ZWOASICamera(object):
                     f"Error acquiring frame for index {self.id}. Error: Exposure failed.",
                     status_code=ZWOASIExposureStatus.FAILED,
                 )
-
-            # Sleep for 1/10th of the exposure time (which is in seconds):
-            # [TBC]: Is this the right way to wait for the exposure to complete?
-            sleep(exposure_time / 10)
-
-        # [TBC]: Do we need to explicitly stop the exposure here?
-        # error = self.lib.ASIStopExposure(self.id)
-
-        # # If an error occurred, raise an exception:
-        # if error != ZWOASIErrorCode.SUCCESS:
-        #     raise RuntimeError(
-        #         f"Error stopping exposure for index {self.id}. Error: {errors[error]}"
-        #     )
 
         # Get the bytes data from the camera one we have a successful exposure:
         error = self.lib.ASIGetDataAfterExp(self.id, c_buffer, size)
@@ -1406,7 +1407,11 @@ class ZWOASICamera(object):
             )
 
         # Convert exposure to immutable bytes to avoid any exported buffer issues:
-        return self._convert_buffer_to_int_list(bytearray(c_buffer))
+        return (
+            self._convert_buffer_to_int_list(bytearray(c_buffer)),
+            at_ns,
+            end_ns,
+        )
 
     def _get_video_frame(self, timeout: int = -1) -> List[int]:
         """
@@ -1452,7 +1457,7 @@ class ZWOASICamera(object):
         # Convert exposure to immutable bytes to avoid any exported buffer issues:
         return self._convert_buffer_to_int_list(bytearray(c_buffer))
 
-    def get_frame(self, is_dark: bool = False) -> List[int]:
+    def get_frame(self, is_dark: bool = False) -> Tuple[List[int], int, int]:
         """
         Retrieve a single frame of image data from the camera.
 
@@ -1472,11 +1477,11 @@ class ZWOASICamera(object):
             raise RuntimeError("Device is not ready to capture frames.")
 
         # If we are streaming video, get a video frame, if not, get a single frame:
-        return (
-            self._get_video_frame()
-            if self.is_video_streaming
-            else self._get_frame(is_dark=is_dark)
-        )
+
+        if self.is_video_streaming:
+            return self._get_video_frame(), 0, 0
+
+        return self._get_frame(is_dark=is_dark)
 
     def get_dropped_frames(self) -> int:
         """

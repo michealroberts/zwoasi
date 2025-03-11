@@ -239,7 +239,7 @@ def main() -> None:
     print(f"Camera Temperature: {temperature}°C")
 
     # Get the frame from the camera:
-    frame = zwo.get_frame()
+    frame, _, _ = zwo.get_frame()
 
     print(f"Camera Frame Size: {len(frame)}")
 
