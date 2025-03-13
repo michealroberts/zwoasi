@@ -199,13 +199,19 @@ def main() -> None:
 
     print(f"Camera Temperature: {temperature}°C")
 
-    # Get the frame from the camera:
-    frame = zwo.get_frame()
+    try:
+        # Get the frame from the camera:
+        frame = zwo.get_frame()
+    except Exception as e:
+        print(f"Error: {e}")
 
     print(f"Camera Frame Size: {len(frame)}")
 
     # Turn off the camera's cooler:
     zwo.turn_off_cooler()
+
+    # Disconnect from the camera:
+    zwo.disconnect()
 
 
 # **************************************************************************************
