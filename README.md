@@ -45,14 +45,23 @@ You should see something like this as your output:
 Bus 001 Device 016: ID 03c3:620b ZWO ASI6200MM Pro
 ```
 
-To allow non-root users to access the ASI camera, you need to create a udev rule. The following command will copy the rule to the correct location:
+To allow non-root users to access the ASI camera, you need to create a udev rule. Firstly, create the .rules file:
 
 ```bash
-sudo install /zwo/sdk/137/lib/asi.rules /lib/udev/asi-rules.d
+cat <<EOF > asi.rules
+ACTION=="add", ATTR{idVendor}=="03c3", RUN+="/bin/sh -c '/bin/echo 200 >/sys/module/usbcore/parameters/usbfs_memory_mb'"
+SUBSYSTEMS=="usb", ATTR{idVendor}=="03c3", MODE="0666"
+EOF
+```
+
+The following command will copy the rule to the correct location:
+
+```bash
+sudo install asi.rules /lib/udev/rules.d
 ```
 
 ```bash
-sudo udevadm control --reload-rules && udevadm trigger
+sudo udevadm control --reload-rules && sudo udevadm trigger
 ```
 
 Once you have done this, check that the camera is accessible by running the following command:
