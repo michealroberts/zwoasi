@@ -1,6 +1,6 @@
 [project]
 name = "zwo"
-version = "0.2.0"
+version = "0.3.0"
 description = "Modern python bindings for ZWO ASI astronomical cameras"
 authors = [{ name = "Michael Roberts", email = "michael@observerly.com" }]
 maintainers = [{ name = "Michael Roberts", email = "michael@observerly.com" }]
@@ -42,7 +42,7 @@ dev = [
 
 [tool.pytest.ini_options]
 pythonpath = [".", "src"]
-asyncio_default_fixture_loop_scope = ["session"]
+asyncio_default_fixture_loop_scope = "session"
 
 [tool.mypy]
 plugins = ["pydantic.mypy"]
