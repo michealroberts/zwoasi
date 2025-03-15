@@ -1609,6 +1609,48 @@ class ZWOASICamera(object):
         if error != ZWOASIErrorCode.SUCCESS:
             raise RuntimeError(f"Error turning off cooler. Error: {errors[error]}")
 
+    def turn_on_anti_dew_heater(self) -> None:
+        """
+        Turn on the camera's anti-dew heater, if available.
+        """
+        if not self.is_connected():
+            return
+
+        # Turn on the anti-dew heater:
+        on = 1
+
+        # Turn on the anti-dew heater:
+        error: int = self.lib.ASISetControlValue(
+            self.id, ZWOASIControlType.ANTI_DEW_HEATER, on, 0
+        )
+
+        # If an error occurred, raise an exception:
+        if error != ZWOASIErrorCode.SUCCESS:
+            raise RuntimeError(
+                f"Error turning on anti-dew heater for index {self.id}. Error: {errors[error]}"
+            )
+
+    def turn_off_anti_dew_heater(self) -> None:
+        """
+        Turn off the camera's anti-dew heater, if available.
+        """
+        if not self.is_connected():
+            return
+
+        # Turn off the anti-dew heater:
+        off = 0
+
+        # Turn off the anti-dew heater:
+        error: int = self.lib.ASISetControlValue(
+            self.id, ZWOASIControlType.ANTI_DEW_HEATER, off, 0
+        )
+
+        # If an error occurred, raise an exception:
+        if error != ZWOASIErrorCode.SUCCESS:
+            raise RuntimeError(
+                f"Error turning off anti-dew heater for index {self.id}. Error: {errors[error]}"
+            )
+
     def get_temperature(self) -> float:
         """
         Retrieve the current sensor temperature (in °C), if cooling is supported.

@@ -185,8 +185,15 @@ def main() -> None:
 
     print(f"Camera Can Pulse Guide: {can_pulse_guide}")
 
+    # Turn on the camera's anti-dew heater:
+    zwo.turn_on_anti_dew_heater()
+
+    print("Camera Anti-Dew Heater: ON")
+
     # Turn on the camera's cooler:
     zwo.turn_on_cooler()
+
+    print("Camera Cooler: ON")
 
     # Set the cooler's target temperature to -10°C:
     zwo.set_temperature(-10)
@@ -206,6 +213,13 @@ def main() -> None:
 
     # Turn off the camera's cooler:
     zwo.turn_off_cooler()
+
+    print("Camera Cooler: OFF")
+
+    # Turn off the camera's anti-dew heater:
+    zwo.turn_off_anti_dew_heater()
+
+    print("Camera Anti-Dew Heater: OFF")
 
 
 # **************************************************************************************
