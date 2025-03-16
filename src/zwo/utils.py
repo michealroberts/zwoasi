@@ -53,6 +53,7 @@ def get_asi_libary_path(version: str) -> Path:
     # Compile a list of archiectures to our driver supported architecture value:
     ARCHITECTURE_MAP = {
         # 64-bit Intel/AMD architectures:
+        "x64": "x64",
         "x86_64": "x64",
         "amd64": "x64",
         "x86-64": "x64",
@@ -82,13 +83,22 @@ def get_asi_libary_path(version: str) -> Path:
     # Are we running on an older Intel Mac?
     is_darwin_mac: bool = sys.lower() == "darwin" and not is_arm_mac
 
+    # Are we running on Windows?
+    is_windows: bool = sys.lower() == "windows"
+
     # If we are on MacOS (e.g., darwin) then we can can look for mac:
     arch: str = (
         "mac" if is_darwin_mac else ARCHITECTURE_MAP.get(architecture, architecture)
     )
 
     # Direct to the dylib if the system is MacOS (e.g., darwin), otherwise default to .so:
-    filename = "libASICamera2.dylib" if is_darwin_mac else "libASICamera2.so"
+    filename = (
+        "libASICamera2.dll"
+        if is_windows
+        else "libASICamera2.dylib"
+        if is_darwin_mac
+        else "libASICamera2.so"
+    )
 
     # Build the SDK library path using pathlib's '/' operator:
     sdk_path: Path = (
