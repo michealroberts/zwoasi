@@ -92,7 +92,13 @@ def get_asi_libary_path(version: str) -> Path:
 
     # Build the SDK library path using pathlib's '/' operator:
     sdk_path: Path = (
-        Path(BASE_DIR) / "sdk" / version.replace(".", "") / "lib" / arch / filename
+        Path(BASE_DIR)
+        / "sdk"
+        / "asi"
+        / version.replace(".", "")
+        / "lib"
+        / arch
+        / filename
     )
 
     # Verify that the sdk_location exists before proceeding:
