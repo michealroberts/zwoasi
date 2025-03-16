@@ -175,6 +175,6 @@ cython_debug/
 
 # ZWO ASI Specific SDK
 !sdk
-!sdk/*/include
-!sdk/*/lib
-!sdk/**/*.so
+!sdk/**/include
+!sdk/**/lib
+!sdk/**/**/*.so
