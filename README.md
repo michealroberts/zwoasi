@@ -88,9 +88,13 @@ If the output is anything other than `200`, something has gone wrong. To fix, si
 
 Once you have verified that the camera is accessible, if you reconnect the camera by unplugging it from the UBS port and plugging it back in, you can now use the `zwo` library to control the camera.
 
+## MacOS Setup
+
+There is no additional setup required for MacOS.
+
 ## Windows Setup
 
-Unfortunately, ZWO ASI does not directly support .dll files for Windows. However, you can use the `zwo` library on Windows by using the Windows Subsystem for Linux (WSL) and following the Linux setup instructions above and passing through USB devices to the WSL from your host machine.
+There is no additional setup required for Windows.
 
 ## Usage
 
