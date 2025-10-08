@@ -48,15 +48,12 @@ asyncio_default_fixture_loop_scope = "session"
 plugins = ["pydantic.mypy"]
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/zwo"]
-exclude = ["/.devcontainer", "/.github", "/.vscode", "/docs"]
-
-[tool.hatch.build.targets.wheel.force-include]
-"sdk" = "sdk"
+only-include = ["src/zwo"]
+sources = ["src"]
+force-include = { "sdk" = "sdk" }
 
 [tool.hatch.build.targets.sdist]
-packages = ["src/zwo"]
+sources = ["src"]
+artifacts = ["sdk/**"]
 exclude = ["/.devcontainer", "/.github", "/.vscode", "/docs"]
-
-[tool.hatch.build.targets.sdist.force-include]
-"sdk" = "sdk"
+force-include = { "sdk" = "sdk" }
