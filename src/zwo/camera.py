@@ -1563,6 +1563,14 @@ class ZWOASICamera(object):
         if self.is_video_streaming:
             return
 
+        error: int = self.lib.ASIStartVideoCapture(self.id)
+
+        if error != ZWOASIErrorCode.SUCCESS:
+            raise ZWOASIIOError(
+                f"Error starting video capture for index {self.id}. Error: {errors[error]}",
+                ZWOASIErrorCode(error),
+            )
+
         # Update is_video_streaming after successful acquisition start:
         self.is_video_streaming = True
 
