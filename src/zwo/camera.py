@@ -33,7 +33,7 @@ from .enums import (
     ZWOASIImageType,
     ZWOASITriggerOutput,
 )
-from .errors import ZWOASIExposureError, errors
+from .errors import ZWOASIIOError, ZWOASIExposureError, errors
 from .gps import ZWOASI_GPS_DATA_CTYPE, ZWOASIGPSData
 from .info import ZWOASI_CAMERA_INFORMATION_CTYPE, ZWOASICameraInformation
 from .lib import ZWOASICameraLib
@@ -142,6 +142,11 @@ class ZWOASICamera(object):
 
     # Whether the camera is cabable of returning GPS data:
     has_gps_support: bool = False
+
+    # Default timeout, in milliseconds, for ASIGetVideoData when streaming video.
+    # A finite default prevents indefinite blocking when no frame is delivered;
+    # pass -1 to _get_video_frame() for an infinite wait.
+    DEFAULT_VIDEO_FRAME_TIMEOUT_MS: int = 2000
 
     def __init__(self, id: int, params: Optional[ZWOASICameraParams] = None) -> None:
         """
@@ -1408,7 +1413,7 @@ class ZWOASICamera(object):
         # Convert exposure to immutable bytes to avoid any exported buffer issues:
         return self._convert_buffer_to_int_list(bytearray(c_buffer))
 
-    def _get_video_frame(self, timeout: int = -1) -> List[int]:
+    def _get_video_frame(self, timeout: Optional[int] = None) -> List[int]:
         """
         Retrieve a single video frame in live-stream mode.
 
@@ -1420,11 +1425,19 @@ class ZWOASICamera(object):
         different buffer post-processing.
 
         Args:
-            timeout (int): Maximum time in milliseconds to wait for a new frame.
-                           A value of -1 indicates an infinite wait.
+            timeout (Optional[int]): Maximum time in milliseconds to wait for a new
+                frame. Defaults to DEFAULT_VIDEO_FRAME_TIMEOUT_MS; pass -1 for an
+                infinite wait.
 
         Returns:
-            List[int]: A list of pixel values representing the most recent video frame.
+            List[int]: A list of pixel values representing the most recent video
+            frame.
+
+        Raises:
+            ZWOASIIOError: If the SDK returns TIMEOUT (no frame delivered within
+                `timeout`) or any other non-success error code. Callers that need
+                to poll can catch this and inspect `error_code` against
+                ZWOASIErrorCode.TIMEOUT.
         """
         if not self.is_connected():
             raise RuntimeError("Device is not connected.")
@@ -1433,6 +1446,9 @@ class ZWOASICamera(object):
             raise RuntimeError(
                 "Device is not streaming video. You need to call start_acquisition() first."
             )
+
+        if timeout is None:
+            timeout = self.DEFAULT_VIDEO_FRAME_TIMEOUT_MS
 
         buffer, size = self._get_frame_buffer()
 
@@ -1443,10 +1459,13 @@ class ZWOASICamera(object):
         # Get the bytes data from the camera one we have a successful exposure:
         error: int = self.lib.ASIGetVideoData(self.id, c_buffer, size, timeout)
 
-        # If an error occurred, raise an exception:
+        # Surface SDK failures (including TIMEOUT) as a typed ZWOASIIOError so
+        # callers can discriminate via `error_code` rather than parsing message
+        # text from a generic RuntimeError:
         if error != ZWOASIErrorCode.SUCCESS:
-            raise RuntimeError(
-                f"Error getting data after exposure for index {self.id}. Error: {errors[error]}"
+            raise ZWOASIIOError(
+                f"Error getting data after exposure for index {self.id}. Error: {errors[error]}",
+                ZWOASIErrorCode(error),
             )
 
         # Convert exposure to immutable bytes to avoid any exported buffer issues:
