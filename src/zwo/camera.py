@@ -33,7 +33,7 @@ from .enums import (
     ZWOASIImageType,
     ZWOASITriggerOutput,
 )
-from .errors import ZWOASIIOError, ZWOASIExposureError, errors
+from .errors import ZWOASIExposureError, ZWOASIIOError, errors
 from .gps import ZWOASI_GPS_DATA_CTYPE, ZWOASIGPSData
 from .info import ZWOASI_CAMERA_INFORMATION_CTYPE, ZWOASICameraInformation
 from .lib import ZWOASICameraLib
@@ -255,6 +255,34 @@ class ZWOASICamera(object):
             if error != ZWOASIErrorCode.SUCCESS:
                 raise RuntimeError(
                     f"Failed to open camera {self.id}. Error: {errors[error]}"
+                )
+
+            # Codes that simply mean "nothing to stop" and are safe to ignore
+            # when defensively clearing prior capture/exposure state:
+            benign_stop_errors = {
+                ZWOASIErrorCode.SUCCESS,
+                ZWOASIErrorCode.INVALID_SEQUENCE,
+                ZWOASIErrorCode.INVALID_MODE,
+            }
+
+            # Defensively stop any video capture that a previous session (or an
+            # ungraceful shutdown) may have left running on the device, so we
+            # start from a known-idle state before initialising:
+            error = self.lib.ASIStopVideoCapture(self.id)
+            if error not in benign_stop_errors:
+                raise RuntimeError(
+                    f"Failed to stop video capture on camera {self.id} prior to "
+                    f"initialisation. Error: {errors[error]}"
+                )
+
+            # Likewise, abort any in-flight single-shot exposure that could
+            # otherwise leave the SDK in a non-IDLE status and block ASIInitCamera
+            # or subsequent get_frame() calls:
+            error = self.lib.ASIStopExposure(self.id)
+            if error not in benign_stop_errors:
+                raise RuntimeError(
+                    f"Failed to stop exposure on camera {self.id} prior to "
+                    f"initialisation. Error: {errors[error]}"
                 )
 
             # Attempt to initialise the camera:
