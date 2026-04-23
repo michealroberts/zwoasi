@@ -1468,15 +1468,17 @@ class ZWOASICamera(object):
         if not self.is_connected():
             raise RuntimeError("Device is not connected.")
 
+        # During video streaming the SDK's single-shot exposure status is not
+        # IDLE, so is_ready() is not the right gate -- _get_video_frame does
+        # its own is_video_streaming check:
+        if self.is_video_streaming:
+            return self._get_video_frame()
+
+        # Single-shot path: the IDLE exposure status check is meaningful here:
         if not self.is_ready():
             raise RuntimeError("Device is not ready to capture frames.")
 
-        # If we are streaming video, get a video frame, if not, get a single frame:
-        return (
-            self._get_video_frame()
-            if self.is_video_streaming
-            else self._get_frame(is_dark=is_dark)
-        )
+        return self._get_frame(is_dark=is_dark)
 
     def get_dropped_frames(self) -> int:
         """
